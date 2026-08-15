@@ -38,7 +38,7 @@ const LandingFooter = () => {
 
         {/* Copyright */}
         <div className="text-[11px] font-mono text-gray-400">
-          © {new Date().getFullYear()} GenX. Technical Elegance defined.
+          © {new Date().getFullYear()} GenX. Precision in Typography.
         </div>
       </div>
     </footer>

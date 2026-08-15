@@ -13,7 +13,7 @@ const HeroSection = ({ onOpenAuth }) => {
       {/* Pill Badge */}
       <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/70 backdrop-blur-md border border-indigo-100/80 text-indigo-700 text-xs font-mono mb-8 shadow-sm">
         <Sparkles className="w-3.5 h-3.5 text-indigo-600" />
-        <span>Technical Elegance • Automated Resume Engine</span>
+        <span>AI Precision • Automated Resume Engine</span>
       </div>
 
       {/* Main Title */}
@@ -36,7 +36,7 @@ const HeroSection = ({ onOpenAuth }) => {
       <div className="flex flex-col sm:flex-row items-center gap-4">
         {session?.user ? (
           <Link
-            href="/resume"
+            href="/dashboard"
             className="inline-flex items-center gap-2.5 px-8 py-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-mono text-sm uppercase tracking-wider font-semibold transition-all duration-300 shadow-[0_0_30px_rgba(79,70,229,0.25)] hover:shadow-[0_0_40px_rgba(79,70,229,0.35)] hover:scale-[1.02] group"
           >
             <LayoutDashboard className="w-4 h-4" />

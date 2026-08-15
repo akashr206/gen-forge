@@ -19,8 +19,8 @@ const sourceSerif = Source_Serif_4({
 import AuthProvider from "@/components/providers/AuthProvider";
 
 export const metadata = {
-  title: "GenX — Automated Resumes & Technical Elegance",
-  description: "Technical Elegance Resume Builder",
+  title: "GenX | AI Automated Resumes",
+  description: "AI Resume Builder",
 };
 
 export default function RootLayout({ children }) {

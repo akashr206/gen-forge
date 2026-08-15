@@ -11,7 +11,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 # Resume Builder Architecture & Conventions
 
 ## Design Aesthetics
-- **Core Style**: Minimalist, technical elegance. Clean typography, generous whitespace.
+- **Core Style**: Minimalist, clean design. Clean typography, generous whitespace.
 - **Links**: Hyperlinks (both in headers and markdown descriptions) MUST be styled as simple text (`text-blue-700` or `text-blue-600`), without underlines or hover effects. This ensures a clean, professional look that reads well in PDF form.
 - **Separators**: Use em dashes (`—`) or pipes (`|`) to separate inline metadata (e.g., email — phone — location, or Location | Date | Link 1 | Link 2) instead of bullet points.
 

@@ -41,7 +41,7 @@ const LandingNavbar = ({ onOpenAuth }) => {
             <div className="flex items-center gap-3">
               {/* Dashboard Button */}
               <Link
-                href="/resume"
+                href="/dashboard"
                 className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-mono text-xs uppercase tracking-wider px-4 py-2.5 rounded-md shadow-sm transition-all duration-200 hover:shadow-indigo-500/20 hover:shadow-lg"
               >
                 <LayoutDashboard className="w-3.5 h-3.5" />
@@ -79,7 +79,7 @@ const LandingNavbar = ({ onOpenAuth }) => {
                     </div>
 
                     <Link
-                      href="/resume"
+                      href="/dashboard"
                       className="flex items-center gap-2 px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors"
                       onClick={() => setDropdownOpen(false)}
                     >

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { signIn } from "next-auth/react";
 import { X, Sparkles, Loader2 } from "lucide-react";
 
@@ -25,8 +25,20 @@ const GoogleIcon = () => (
   </svg>
 );
 
-const AuthModal = ({ isOpen, onClose, callbackUrl = "/resume" }) => {
+const AuthModal = ({ isOpen, onClose, callbackUrl = "/dashboard" }) => {
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+    if (isOpen) {
+      window.addEventListener("keydown", handleKeyDown);
+    }
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -49,11 +61,12 @@ const AuthModal = ({ isOpen, onClose, callbackUrl = "/resume" }) => {
       />
 
       {/* Modal Card */}
-      <div className="relative w-full max-w-md bg-white/90 backdrop-blur-xl border border-white/80 rounded-2xl shadow-2xl p-6 sm:p-8 z-10 animate-in fade-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-md bg-white/95 backdrop-blur-xl border border-white/80 rounded-2xl shadow-2xl p-6 sm:p-8 z-10 animate-in fade-in zoom-in-95 duration-200">
         {/* Close button */}
         <button
           onClick={onClose}
           className="absolute top-4 right-4 p-1.5 rounded-full text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors"
+          aria-label="Close modal"
         >
           <X className="w-4 h-4" />
         </button>

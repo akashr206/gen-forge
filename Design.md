@@ -1,5 +1,5 @@
 ---
-name: Technical Elegance
+name: AI Precision Studio
 colors:
   surface: '#f8f9ff'
   surface-dim: '#cbdbf5'

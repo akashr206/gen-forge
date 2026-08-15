@@ -2,15 +2,15 @@ import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 
 export const metadata = {
-  title: "Resume Studio | GenX",
-  description: "Live Resume Editor",
+  title: "Dashboard — GenX Resumes",
+  description: "Manage your resumes",
 };
 
-export default async function ResumeLayout({ children }) {
+export default async function DashboardLayout({ children }) {
   const session = await auth();
 
   if (!session?.user) {
-    redirect("/?auth=login&callbackUrl=/resume");
+    redirect("/?auth=login&callbackUrl=/dashboard");
   }
 
   return <>{children}</>;

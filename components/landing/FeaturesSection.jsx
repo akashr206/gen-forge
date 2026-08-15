@@ -41,7 +41,7 @@ const FeaturesSection = () => {
           Core Capabilities
         </div>
         <h2 className="font-ui text-3xl sm:text-4xl text-gray-900 font-bold tracking-tight mb-3">
-          Technical Elegance
+          Engineered Excellence
         </h2>
         <p className="font-ui text-base sm:text-lg text-gray-600 max-w-xl">
           A system designed for speed and professional sophistication, removing

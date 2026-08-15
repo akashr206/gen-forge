@@ -3,12 +3,13 @@ import { NextResponse } from "next/server";
 
 export default auth((req) => {
   const isAuth = !!req.auth;
-  const isProtected = req.nextUrl.pathname.startsWith("/resume");
+  const path = req.nextUrl.pathname;
+  const isProtected = path.startsWith("/resume") || path.startsWith("/dashboard");
 
   if (isProtected && !isAuth) {
     const landingLoginUrl = new URL("/", req.nextUrl.origin);
     landingLoginUrl.searchParams.set("auth", "login");
-    landingLoginUrl.searchParams.set("callbackUrl", req.nextUrl.pathname);
+    landingLoginUrl.searchParams.set("callbackUrl", path);
     return NextResponse.redirect(landingLoginUrl);
   }
 
@@ -16,5 +17,5 @@ export default auth((req) => {
 });
 
 export const config = {
-  matcher: ["/resume/:path*"],
+  matcher: ["/resume/:path*", "/dashboard/:path*"],
 };
