@@ -16,8 +16,10 @@ const sourceSerif = Source_Serif_4({
   subsets: ["latin"],
 });
 
+import AuthProvider from "@/components/providers/AuthProvider";
+
 export const metadata = {
-  title: "Live Resume Editor",
+  title: "GenX — Automated Resumes & Technical Elegance",
   description: "Technical Elegance Resume Builder",
 };
 
@@ -27,7 +29,9 @@ export default function RootLayout({ children }) {
       lang="en"
       className={`${hankenGrotesk.variable} ${jetbrainsMono.variable} ${sourceSerif.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-ui">{children}</body>
+      <body className="min-h-full flex flex-col font-ui">
+        <AuthProvider>{children}</AuthProvider>
+      </body>
     </html>
   );
 }
