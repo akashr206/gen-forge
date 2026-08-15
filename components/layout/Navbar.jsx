@@ -28,7 +28,7 @@ const Navbar = () => {
 
   return (
     <nav className="h-16 shrink-0 w-full bg-white border-b border-gray-200 px-6 flex items-center justify-between z-20 print:hidden">
-      <Link href="/" className="flex items-center gap-2 group">
+      <Link href={session ? "/dashboard" : "/"} className="flex items-center gap-2 group">
         <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-bold text-lg group-hover:scale-105 transition-transform duration-200 shadow-xs">
           G
         </div>

@@ -94,7 +94,7 @@ const ResumeSkeleton = () => (
   </div>
 );
 
-const ResumeViewer = ({ data }) => {
+const ResumeViewer = ({ data, hideUI = false }) => {
   const [pages, setPages] = useState(null);
   const [zoom, setZoom] = useState(0.8);
   const [fontsReady, setFontsReady] = useState(false);
@@ -196,8 +196,8 @@ const ResumeViewer = ({ data }) => {
 
   return (
     <div 
-      className="w-full h-full relative overflow-y-auto overflow-x-hidden print:bg-white print:overflow-visible flex flex-col items-center print:h-auto print:block"
-      style={{
+      className={`w-full h-full relative overflow-y-auto overflow-x-hidden print:bg-white print:overflow-visible flex flex-col items-center print:h-auto print:block ${hideUI ? '' : 'bg-slate-50/50'}`}
+      style={hideUI ? {} : {
         backgroundImage: 'radial-gradient(#cbd5e1 1.5px, transparent 1.5px)',
         backgroundSize: '24px 24px'
       }}
@@ -218,7 +218,7 @@ const ResumeViewer = ({ data }) => {
       </div>
 
       <div 
-        className="flex flex-col items-center gap-8 py-12 px-8 print:p-0 print:gap-0 origin-top transition-transform duration-200 print-no-scale"
+        className={`flex flex-col items-center gap-8 print:p-0 print:gap-0 origin-top transition-transform duration-200 print-no-scale ${hideUI ? 'py-0 px-0' : 'py-12 px-8'}`}
         style={{ transform: `scale(${zoom})` }}
       >
         {isInitialLoad ? (
@@ -241,8 +241,9 @@ const ResumeViewer = ({ data }) => {
         ))}
       </div>
 
-      <div className="fixed bottom-8 right-8 flex items-center gap-2 bg-white/90 backdrop-blur shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-gray-200/50 rounded-full p-1.5 z-50 print:hidden">
-        <button 
+      {!hideUI && (
+        <div className="fixed bottom-8 right-8 flex items-center gap-2 bg-white/90 backdrop-blur shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-gray-200/50 rounded-full p-1.5 z-50 print:hidden">
+          <button  
           onClick={handleZoomOut}
           disabled={zoom <= 0.5}
           className="p-2.5 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed rounded-full transition-colors text-gray-600 hover:text-gray-900"
@@ -266,6 +267,7 @@ const ResumeViewer = ({ data }) => {
           <Plus className="w-4 h-4" />
         </button>
       </div>
+      )}
     </div>
   );
 };

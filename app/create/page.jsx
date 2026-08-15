@@ -2,6 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { parsePartialJson } from '@/lib/utils';
+import LiveResumePreview from '@/components/resume/LiveResumePreview';
+import initialData from '@/data/sample-resume.json';
 
 import Navbar from '@/components/layout/Navbar';
 import { Button } from '@/components/ui/button';
@@ -71,6 +74,10 @@ export default function CreateResumePage() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [generationProgress, setGenerationProgress] = useState(0);
   const [error, setError] = useState(null);
+  const [parsedObject, setParsedObject] = useState({});
+  const scrollRef = React.useRef(null);
+
+  // Auto-scroll disabled per user request
 
   useEffect(() => {
     if (isGenerating) {
@@ -114,9 +121,12 @@ export default function CreateResumePage() {
                 const data = JSON.parse(line.slice(6));
                 if (data.choices?.[0]?.delta?.content) {
                   accumulatedJSON += data.choices[0].delta.content;
+                  const partial = parsePartialJson(accumulatedJSON);
+                  if (partial) {
+                    setParsedObject(partial);
+                  }
                 }
               } catch (e) {
-                // Ignore parse errors for partial lines
               }
             }
           }
@@ -125,8 +135,25 @@ export default function CreateResumePage() {
 
       try {
         const resultObject = JSON.parse(accumulatedJSON);
-        sessionStorage.setItem('generatedResume', JSON.stringify(resultObject));
-        router.push('/resume');
+        
+        const saveRes = await fetch('/api/resumes', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            title: resultObject.basics?.name ? `${resultObject.basics.name}'s Resume` : 'AI Generated Resume',
+            basics: resultObject.basics,
+            sections: resultObject.sections,
+            design: initialData.design
+          }),
+        });
+
+        if (!saveRes.ok) {
+          throw new Error('Failed to save generated resume to database');
+        }
+
+        const { resume } = await saveRes.json();
+        
+        router.push(`/resume?id=${resume._id}`);
       } catch (e) {
         console.error("Failed to parse accumulated JSON:", e);
         console.log("Raw output:", accumulatedJSON);
@@ -199,40 +226,47 @@ ${projects}
     submit({ details: combinedDetails, jd, pdfText });
   };
 
-  // Magical Loading State UI
   if (isGenerating) {
     const isBasicsDone = generationProgress >= 1;
     const isExperienceDone = generationProgress >= 2;
     const isEducationDone = generationProgress >= 3;
 
-    return (
-      <div className="flex flex-col h-screen w-full bg-background overflow-hidden">
-        <Navbar />
-        <main className="flex-1 flex flex-col items-center justify-center p-8 bg-gradient-to-b from-white to-slate-50/50">
-          <div className="flex flex-col items-center gap-8 max-w-md text-center">
-            <div className="relative flex items-center justify-center w-24 h-24">
-              <div className="absolute inset-0 bg-blue-500 rounded-full animate-ping opacity-20"></div>
-              <div className="absolute inset-2 bg-blue-100 rounded-full animate-pulse"></div>
-              <Sparkles className="w-10 h-10 text-blue-600 animate-pulse relative z-10" />
-            </div>
-            
-            <div className="space-y-2">
-              <h1 className="text-3xl font-light tracking-tight">Crafting Your Resume</h1>
-              <p className="text-slate-500">Our AI is analyzing your details and formatting the perfect layout.</p>
-            </div>
+    const livePreviewData = {
+      ...initialData,
+      ...parsedObject,
+      basics: {
+        ...initialData.basics,
+        ...(parsedObject.basics || {})
+      },
+      sections: parsedObject.sections || [],
+      design: initialData.design
+    };
 
-            <div className="w-full max-w-sm space-y-4 text-left mt-8">
-              <div className="flex items-center gap-3 text-slate-700">
-                {isBasicsDone ? <CheckCircle2 className="w-5 h-5 text-green-500" /> : <div className="w-5 h-5 rounded-full border-2 border-blue-500 border-t-transparent animate-spin" />}
-                <span className={isBasicsDone ? "text-slate-500 line-through" : "font-medium"}>Extracting Personal Information</span>
-              </div>
-              <div className="flex items-center gap-3 text-slate-700">
-                {isExperienceDone ? <CheckCircle2 className="w-5 h-5 text-green-500" /> : <div className={isBasicsDone ? "w-5 h-5 rounded-full border-2 border-blue-500 border-t-transparent animate-spin" : "w-5 h-5 rounded-full border-2 border-slate-200"} />}
-                <span className={isExperienceDone ? "text-slate-500 line-through" : isBasicsDone ? "font-medium" : "text-slate-400"}>Highlighting Key Experience</span>
-              </div>
-              <div className="flex items-center gap-3 text-slate-700">
-                {isEducationDone ? <CheckCircle2 className="w-5 h-5 text-green-500" /> : <div className={isExperienceDone ? "w-5 h-5 rounded-full border-2 border-blue-500 border-t-transparent animate-spin" : "w-5 h-5 rounded-full border-2 border-slate-200"} />}
-                <span className={isEducationDone ? "text-slate-500 line-through" : isExperienceDone ? "font-medium" : "text-slate-400"}>Structuring Education & Skills</span>
+    return (
+      <div className="flex flex-col h-screen w-full overflow-hidden relative bg-slate-50">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-blue-400/20 blur-[120px] mix-blend-multiply animate-pulse"></div>
+          <div className="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] rounded-full bg-indigo-400/20 blur-[120px] mix-blend-multiply animate-pulse" style={{ animationDelay: '1s' }}></div>
+          <div className="absolute top-[20%] right-[10%] w-[40%] h-[40%] rounded-full bg-pink-400/20 blur-[100px] mix-blend-multiply animate-pulse" style={{ animationDelay: '2s' }}></div>
+        </div>
+
+        <Navbar />
+
+        <main className="flex-1 w-full flex flex-col items-center justify-center relative z-10 pt-4 pb-8 overflow-hidden">
+          <div className="flex flex-col items-center mb-6 text-slate-800 text-center space-y-2">
+            <Sparkles className="w-8 h-8 text-blue-600 animate-pulse mb-2" />
+            <h1 className="text-2xl font-light tracking-wide">Weaving Your Magic Resume</h1>
+            <p className="text-slate-500 text-sm">Please wait while the AI crafts your professional story in real-time...</p>
+          </div>
+
+          <div 
+            ref={scrollRef}
+            className="relative flex-1 w-full flex justify-center overflow-y-auto overflow-x-hidden pt-4 pb-16"
+          >
+            {/* The live preview */}
+            <div className="transform scale-[0.65] md:scale-[0.80] xl:scale-90 origin-top transition-all duration-500 ease-in-out">
+              <div className="shadow-2xl shadow-blue-500/10 ring-1 ring-black/5 bg-white pointer-events-none rounded-md overflow-hidden">
+                <LiveResumePreview data={livePreviewData} />
               </div>
             </div>
           </div>
@@ -254,7 +288,6 @@ ${projects}
         </div>
 
         <div className="grid gap-8">
-          {/* Upload Section */}
           <Card className="border-slate-200/60 shadow-sm bg-white/50 backdrop-blur-sm">
             <CardHeader>
               <CardTitle className="text-xl font-medium">Quick Start: Upload Resume</CardTitle>
@@ -286,7 +319,6 @@ ${projects}
             </CardContent>
           </Card>
 
-          {/* Details Section */}
           <Card className="border-slate-200/60 shadow-sm">
             <CardHeader>
               <CardTitle className="text-xl font-medium">Manual Details</CardTitle>
@@ -327,7 +359,6 @@ ${projects}
             </CardContent>
           </Card>
 
-          {/* JD Section */}
           <Card className="border-slate-200/60 shadow-sm">
             <CardHeader>
               <CardTitle className="text-xl font-medium">Target Role <span className="text-slate-400 text-sm font-normal ml-2">(Optional)</span></CardTitle>

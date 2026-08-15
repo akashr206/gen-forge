@@ -4,6 +4,9 @@ import ReactMarkdown from "react-markdown";
 const ContentBlock = ({ content }) => {
     if (!content || typeof content !== "string") return null;
 
+    // Convert single newlines to markdown hard-breaks (two spaces + newline)
+    const formattedContent = content.replace(/\n/g, '  \n');
+
     return (
         <div className="flex flex-col gap-[length:calc(var(--resume-item-gap)*0.5)] text-[length:var(--resume-body-size)] text-gray-700 leading-relaxed break-inside-avoid">
             <ReactMarkdown
@@ -38,7 +41,7 @@ const ContentBlock = ({ content }) => {
                     ),
                 }}
             >
-                {content}
+                {formattedContent}
             </ReactMarkdown>
         </div>
     );
