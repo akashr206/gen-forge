@@ -14,7 +14,7 @@ const ContentBlock = ({ content }) => {
           ul: ({ node, ...props }) => <ul className="flex flex-col gap-[length:calc(var(--resume-item-gap)*0.5)] m-0 p-0" {...props} />,
           li: ({ node, ...props }) => (
             <li className="flex items-start gap-[length:var(--resume-item-gap)]">
-              <div className="w-[length:calc(var(--resume-body-size)*0.35)] h-[length:calc(var(--resume-body-size)*0.35)] rounded-full bg-gray-400 mt-[length:calc(var(--resume-body-size)*0.65)] shrink-0"></div>
+              <div className="w-[length:calc(var(--resume-body-size)*0.45)] h-[length:calc(var(--resume-body-size)*0.45)] rounded-full bg-gray-700 mt-[length:calc(var(--resume-body-size)*0.55)] shrink-0"></div>
               <span>{props.children}</span>
             </li>
           ),

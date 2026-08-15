@@ -143,8 +143,8 @@ const ResumeViewer = ({ data }) => {
       const width = containerRect.width; 
       const pageHeight = width * 1.414; 
       
-      const pagePadding = width * 0.07; 
-      const availableHeight = pageHeight - (pagePadding * 2);
+      const actualMargin = (data.design?.margin ?? 56) * (width / 793.7);
+      const maxBottomCoordinate = pageHeight - actualMargin;
 
       const calculatedPages = [];
       let currentPage = { shiftY: 0, visibleIds: new Set() };
@@ -155,11 +155,11 @@ const ResumeViewer = ({ data }) => {
         
         const relativeTop = offsetTop - currentPage.shiftY;
         
-        if (relativeTop + height > availableHeight && currentPage.visibleIds.size > 0) {
+        if (relativeTop + height > maxBottomCoordinate && currentPage.visibleIds.size > 0) {
           calculatedPages.push(currentPage);
           
           currentPage = {
-            shiftY: offsetTop - pagePadding,
+            shiftY: offsetTop - actualMargin,
             visibleIds: new Set([el.id])
           };
         } else {
@@ -234,7 +234,7 @@ const ResumeViewer = ({ data }) => {
               ...cssVariables
             }}
           >
-            <div style={{ transform: `translateY(-${page.shiftY}px)` }} className="w-full relative">
+            <div style={{ marginTop: `-${page.shiftY}px` }} className="w-full relative">
               <VisibilityContext.Provider value={page.visibleIds}>
                 <BaseTemplate data={data} />
               </VisibilityContext.Provider>

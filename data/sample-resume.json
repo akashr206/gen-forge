@@ -3,13 +3,13 @@
     "headerFont": "TeX Gyre Pagella",
     "bodyFont": "Noto Sans",
     "margin": 56,
-    "sectionGap": 28,
-    "itemGap": 8,
+    "sectionGap": 10,
+    "itemGap": 6,
     "fontSizes": {
-      "title": 52,
-      "subtitle": 22,
-      "sectionHeader": 20,
-      "itemTitle": 18,
+      "title": 44,
+      "subtitle": 24,
+      "sectionHeader": 24,
+      "itemTitle": 20,
       "itemSubtitle": 16,
       "body": 14
     }
@@ -19,7 +19,8 @@
     "title": "Full Stack Developer",
     "email": "john.doe@example.com",
     "phone": "+1 (555) 123-4567",
-    "location": "New York, NY"
+    "location": "New York, NY",
+    "alignment": "center"
   },
   "sections": [
     {
@@ -46,6 +47,23 @@
           "date": "Jun 2018 - Dec 2020",
           "location": "New York, NY",
           "content": "- Developed responsive, accessible, and interactive user interfaces using **React** and **Redux**.\n- Collaborated closely with designers to implement **pixel-perfect** implementations of Figma prototypes."
+        }
+      ]
+    },
+    {
+      "id": "projects",
+      "heading": "Projects",
+      "type": "timeline",
+      "items": [
+        {
+          "primary": "E-Commerce Platform",
+          "secondary": "Personal Project",
+          "date": "2022 - 2023",
+          "links": [
+            { "label": "Live Demo", "url": "https://ecommerce-demo.com" },
+            { "label": "Source Code", "url": "https://github.com/johndoe/ecommerce" }
+          ],
+          "content": "A full-stack e-commerce solution built with **Next.js**, **Stripe**, and **PostgreSQL**.\n\n- Implemented secure user authentication and payment processing.\n- Designed a responsive and accessible user interface handling over 1k daily active mock users."
         }
       ]
     },

@@ -51,6 +51,50 @@ const TimelineEditor = ({ items, onChange }) => {
                   <span className="text-xs font-medium text-gray-500">Location</span>
                   <Input value={item.location || ''} onChange={(e) => updateItem(index, 'location', e.target.value)} />
                 </div>
+                <div className="grid gap-2 md:col-span-2 mt-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-medium text-gray-500">Custom Links</span>
+                    <Button variant="ghost" size="sm" className="h-6 text-xs px-2" onClick={(e) => { e.preventDefault(); updateItem(index, 'links', [...(item.links || []), { label: '', url: '' }]); }}>
+                      <Plus className="h-3 w-3 mr-1" /> Add Link
+                    </Button>
+                  </div>
+                  {(item.links || []).map((link, linkIndex) => (
+                    <div key={linkIndex} className="flex gap-2 items-start">
+                      <Input 
+                        placeholder="Label (e.g. GitHub)" 
+                        value={link.label} 
+                        onChange={(e) => {
+                          const newLinks = [...(item.links || [])];
+                          newLinks[linkIndex] = { ...newLinks[linkIndex], label: e.target.value };
+                          updateItem(index, 'links', newLinks);
+                        }} 
+                        className="w-1/3" 
+                      />
+                      <Input 
+                        placeholder="URL (https://...)" 
+                        value={link.url} 
+                        onChange={(e) => {
+                          const newLinks = [...(item.links || [])];
+                          newLinks[linkIndex] = { ...newLinks[linkIndex], url: e.target.value };
+                          updateItem(index, 'links', newLinks);
+                        }} 
+                        className="flex-1" 
+                      />
+                      <Button 
+                        variant="ghost" 
+                        size="icon" 
+                        onClick={(e) => {
+                          e.preventDefault();
+                          const newLinks = [...(item.links || [])];
+                          newLinks.splice(linkIndex, 1);
+                          updateItem(index, 'links', newLinks);
+                        }}
+                      >
+                        <Trash2 className="w-4 h-4 text-red-500" />
+                      </Button>
+                    </div>
+                  ))}
+                </div>
               </div>
               <div className="grid gap-1 mt-2">
                 <span className="text-xs font-medium text-gray-500">Description</span>

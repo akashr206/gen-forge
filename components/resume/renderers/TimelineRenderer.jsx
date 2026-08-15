@@ -12,11 +12,36 @@ const TimelineRenderer = ({ section }) => {
           <div className="flex flex-col gap-[length:calc(var(--resume-item-gap)*0.5)] break-inside-avoid">
             <div className="flex justify-between items-baseline gap-[length:var(--resume-item-gap)]">
               <h4 className="text-[length:var(--resume-item-title-size)] font-semibold text-gray-900 font-resume-header">{item.primary}</h4>
-              {(item.date || item.location) && (
-                <span className="text-[length:var(--resume-body-size)] text-gray-500 font-medium text-right shrink-0">
-                  {item.location && <span>{item.location} | </span>}
-                  {item.date}
-                </span>
+              {(item.date || item.location || (item.links && item.links.length > 0) || item.liveUrl || item.githubUrl || item.link) && (
+                <div className="text-[length:var(--resume-body-size)] text-gray-500 font-medium text-right shrink-0 flex items-center gap-1.5 flex-wrap justify-end">
+                  {item.location && <span>{item.location}</span>}
+                  {(item.location && item.date) && <span>|</span>}
+                  {item.date && <span>{item.date}</span>}
+                  
+                  {/* Legacy support for liveUrl/githubUrl/link if they exist, merged into links logic */}
+                  {(() => {
+                    const allLinks = [...(item.links || [])];
+                    if (item.githubUrl) allLinks.push({ label: 'GitHub', url: item.githubUrl });
+                    if (item.liveUrl) allLinks.push({ label: 'Live', url: item.liveUrl });
+                    if (item.link && !item.liveUrl) allLinks.push({ label: 'Link', url: item.link });
+                    
+                    if (allLinks.length === 0) return null;
+                    
+                    return (
+                      <React.Fragment>
+                        {(item.location || item.date) && <span>|</span>}
+                        {allLinks.map((l, i) => (
+                          <React.Fragment key={i}>
+                            <a href={l.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline decoration-blue-300 underline-offset-2 print:text-blue-600">
+                              {l.label || 'Link'}
+                            </a>
+                            {i < allLinks.length - 1 && <span>|</span>}
+                          </React.Fragment>
+                        ))}
+                      </React.Fragment>
+                    );
+                  })()}
+                </div>
               )}
             </div>
             {item.secondary && (

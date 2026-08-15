@@ -2,6 +2,7 @@ import React from 'react';
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { AlignLeft, AlignCenter, AlignRight } from "lucide-react";
 
 const BasicsEditor = ({ basics, onChange }) => {
   const handleChange = (field, value) => {
@@ -53,6 +54,29 @@ const BasicsEditor = ({ basics, onChange }) => {
         />
       </div>
 
+    <div className="grid gap-2">
+        <Label>Alignment</Label>
+        <div className="flex gap-2 p-1 bg-gray-100 rounded-md w-fit">
+          <button
+            onClick={() => handleChange('alignment', 'left')}
+            className={`p-2 rounded ${basics.alignment === 'left' ? 'bg-white shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+          >
+            <AlignLeft className="w-4 h-4" />
+          </button>
+          <button
+            onClick={() => handleChange('alignment', 'center')}
+            className={`p-2 rounded ${(!basics.alignment || basics.alignment === 'center') ? 'bg-white shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+          >
+            <AlignCenter className="w-4 h-4" />
+          </button>
+          <button
+            onClick={() => handleChange('alignment', 'right')}
+            className={`p-2 rounded ${basics.alignment === 'right' ? 'bg-white shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+          >
+            <AlignRight className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

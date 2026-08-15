@@ -18,18 +18,36 @@ const FONTS = [
 ];
 
 const NumberControl = ({ label, value, onChange, min, max }) => {
+  const [localValue, setLocalValue] = React.useState(value);
+
+  React.useEffect(() => {
+    setLocalValue(value);
+  }, [value]);
+
   const handleMinus = () => {
-    if (value > min) onChange(value - 1);
-  };
-  const handlePlus = () => {
-    if (value < max) onChange(value + 1);
-  };
-  const handleChange = (e) => {
-    const val = parseInt(e.target.value);
-    if (!isNaN(val)) {
-      // Allow temporary out of bounds while typing, but cap on blur? 
-      onChange(Math.min(Math.max(val, min), max));
+    if (value > min) {
+      setLocalValue(value - 1);
+      onChange(value - 1);
     }
+  };
+  
+  const handlePlus = () => {
+    if (value < max) {
+      setLocalValue(value + 1);
+      onChange(value + 1);
+    }
+  };
+  
+  const handleChange = (e) => {
+    setLocalValue(e.target.value);
+  };
+
+  const handleBlur = (e) => {
+    let val = parseInt(e.target.value);
+    if (isNaN(val)) val = min;
+    const clamped = Math.min(Math.max(val, min), max);
+    setLocalValue(clamped);
+    onChange(clamped);
   };
 
   return (
@@ -47,8 +65,9 @@ const NumberControl = ({ label, value, onChange, min, max }) => {
           <input 
             type="number"
             min={min} max={max}
-            value={value}
+            value={localValue}
             onChange={handleChange}
+            onBlur={handleBlur}
             className="h-7 w-11 text-center px-2 rounded-md border border-gray-200 bg-white text-sm font-medium focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
           />
         </div>
