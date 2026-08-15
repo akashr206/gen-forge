@@ -51,3 +51,13 @@
     @apply bg-background text-foreground;
   }
 }
+
+@media print {
+  @page {
+    margin: 0;
+    size: A4;
+  }
+  .print-no-scale {
+    transform: none !important;
+  }
+}

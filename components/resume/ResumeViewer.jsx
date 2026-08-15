@@ -54,16 +54,80 @@ const FONT_CONFIG = {
   }
 };
 
+const ResumeSkeleton = () => (
+  <div className="w-[210mm] h-[297mm] bg-white shadow-2xl p-16 @container flex flex-col gap-10 shrink-0 border border-slate-100">
+    <div className="flex flex-col gap-4 border-b border-slate-100 pb-8">
+      <div className="h-10 w-2/3 bg-slate-200/70 rounded-md animate-pulse"></div>
+      <div className="h-5 w-1/3 bg-slate-200/60 rounded-md animate-pulse"></div>
+      <div className="flex gap-4 mt-2">
+        <div className="h-3 w-24 bg-slate-100 rounded-full animate-pulse"></div>
+        <div className="h-3 w-32 bg-slate-100 rounded-full animate-pulse"></div>
+        <div className="h-3 w-20 bg-slate-100 rounded-full animate-pulse"></div>
+      </div>
+      <div className="mt-4 flex flex-col gap-2">
+        <div className="h-3 w-full bg-slate-50 rounded-full animate-pulse"></div>
+        <div className="h-3 w-11/12 bg-slate-50 rounded-full animate-pulse"></div>
+        <div className="h-3 w-4/5 bg-slate-50 rounded-full animate-pulse"></div>
+      </div>
+    </div>
+    
+    {[1, 2, 3].map(i => (
+      <div key={i} className="flex flex-col gap-5">
+        <div className="h-6 w-48 bg-slate-200/70 rounded-md animate-pulse border-b border-slate-50 pb-2"></div>
+        <div className="flex flex-col gap-4 mt-2">
+          {[1, 2].map(j => (
+            <div key={j} className="flex flex-col gap-2">
+              <div className="flex justify-between items-center">
+                <div className="h-4 w-64 bg-slate-200/50 rounded-md animate-pulse"></div>
+                <div className="h-3 w-24 bg-slate-100 rounded-full animate-pulse"></div>
+              </div>
+              <div className="h-3 w-40 bg-slate-100/50 rounded-md animate-pulse"></div>
+              <div className="mt-1 flex flex-col gap-2">
+                <div className="h-2.5 w-full bg-slate-50 rounded-full animate-pulse"></div>
+                <div className="h-2.5 w-5/6 bg-slate-50 rounded-full animate-pulse"></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+);
+
 const ResumeViewer = ({ data }) => {
   const [pages, setPages] = useState(null);
   const [zoom, setZoom] = useState(0.8);
+  const [fontsReady, setFontsReady] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   const handleZoomIn = () => setZoom(prev => Math.min(prev + 0.1, 2.0));
   const handleZoomOut = () => setZoom(prev => Math.max(prev - 0.1, 0.5));
   const resetZoom = () => setZoom(1.0);
 
+  const headerFont = data?.design?.headerFont;
+  const bodyFont = data?.design?.bodyFont;
+
+  // Font loading effect
   useEffect(() => {
-    if (!data) return;
+    let isMounted = true;
+    setFontsReady(false);
+    
+    const loadFonts = async () => {
+      // Give React a tick to inject the <link> tags first
+      await new Promise(resolve => setTimeout(resolve, 50));
+      await document.fonts.ready;
+      if (isMounted) {
+        setFontsReady(true);
+      }
+    };
+    loadFonts();
+    
+    return () => { isMounted = false; };
+  }, [headerFont, bodyFont]);
+
+  // Pagination effect
+  useEffect(() => {
+    if (!data || !fontsReady) return;
 
     const timer = setTimeout(() => {
       const container = document.getElementById('hidden-continuous-resume');
@@ -105,10 +169,11 @@ const ResumeViewer = ({ data }) => {
       
       calculatedPages.push(currentPage);
       setPages(calculatedPages);
+      setIsInitialLoad(false);
     }, 150);
 
     return () => clearTimeout(timer);
-  }, [data]);
+  }, [data, fontsReady]);
 
   if (!data) return null;
 
@@ -117,7 +182,7 @@ const ResumeViewer = ({ data }) => {
 
   return (
     <div 
-      className="w-full h-full relative overflow-y-auto overflow-x-hidden print:bg-white print:overflow-visible flex flex-col items-center"
+      className="w-full h-full relative overflow-y-auto overflow-x-hidden print:bg-white print:overflow-visible flex flex-col items-center print:h-auto print:block"
       style={{
         backgroundImage: 'radial-gradient(#cbd5e1 1.5px, transparent 1.5px)',
         backgroundSize: '24px 24px'
@@ -140,13 +205,15 @@ const ResumeViewer = ({ data }) => {
       </div>
 
       <div 
-        className="flex flex-col items-center gap-8 py-12 px-8 print:p-0 print:gap-0 origin-top transition-transform duration-200"
+        className="flex flex-col items-center gap-8 py-12 px-8 print:p-0 print:gap-0 origin-top transition-transform duration-200 print-no-scale"
         style={{ transform: `scale(${zoom})` }}
       >
-        {pages ? pages.map((page, index) => (
+        {isInitialLoad ? (
+          <ResumeSkeleton />
+        ) : pages && pages.map((page, index) => (
           <div 
             key={index}
-            className="w-[210mm] shrink-0 bg-white shadow-xl @container print:shadow-none print:w-[210mm] print:m-0 relative overflow-hidden"
+            className="w-[210mm] shrink-0 bg-white shadow-xl @container print:shadow-none print:w-[210mm] print:m-0 print:break-after-page print:break-inside-avoid relative overflow-hidden"
             style={{ 
               height: '297mm',
               '--resume-header-font': headerFontConfig.family,
@@ -159,11 +226,7 @@ const ResumeViewer = ({ data }) => {
               </VisibilityContext.Provider>
             </div>
           </div>
-        )) : (
-          <div className="w-[210mm] h-[297mm] bg-white shadow-xl flex items-center justify-center text-gray-400 text-lg">
-            Rendering pages...
-          </div>
-        )}
+        ))}
       </div>
 
       <div className="fixed bottom-8 right-8 flex items-center gap-2 bg-white/90 backdrop-blur shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-gray-200/50 rounded-full p-1.5 z-50 print:hidden">

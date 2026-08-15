@@ -5,6 +5,8 @@ import ResumeViewer from '@/components/resume/ResumeViewer';
 import ResumeEditor from '@/components/resume/ResumeEditor';
 import initialData from '@/data/sample-resume.json';
 
+import Navbar from '@/components/layout/Navbar';
+
 const ResumePage = () => {
   const [editorData, setEditorData] = useState(initialData);
   const [resumeData, setResumeData] = useState(initialData);
@@ -20,15 +22,18 @@ const ResumePage = () => {
   }, [editorData]);
 
   return (
-    <main className="h-screen w-full flex overflow-hidden bg-background">
-      <div className="w-1/2 max-w-[500px] shrink-0 h-full border-r border-[#E2E8F0] bg-white/70 backdrop-blur-md flex flex-col z-10">
-        <ResumeEditor data={editorData} onChange={setEditorData} />
-      </div>
+    <div className="flex flex-col h-screen w-full bg-background overflow-hidden print:h-auto print:overflow-visible print:block">
+      <Navbar />
+      <main className="flex-1 w-full flex overflow-hidden print:overflow-visible print:h-auto print:block">
+        <div className="w-1/2 max-w-[500px] shrink-0 h-full border-r border-[#E2E8F0] bg-white/70 backdrop-blur-md flex flex-col z-10 print:hidden">
+          <ResumeEditor data={editorData} onChange={setEditorData} />
+        </div>
 
-      <div className="flex-1 h-full relative">
-        <ResumeViewer data={resumeData} />
-      </div>
-    </main>
+        <div className="flex-1 h-full relative print:block print:h-auto print:w-auto print:overflow-visible">
+          <ResumeViewer data={resumeData} />
+        </div>
+      </main>
+    </div>
   );
 };
 
