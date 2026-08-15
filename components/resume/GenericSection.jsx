@@ -1,7 +1,6 @@
 import React from 'react';
 import TextRenderer from './renderers/TextRenderer';
 import TimelineRenderer from './renderers/TimelineRenderer';
-import PageBreakable from './ui/PageBreakable';
 
 const GenericSection = ({ section }) => {
   const { heading, type } = section;

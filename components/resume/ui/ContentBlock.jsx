@@ -25,7 +25,7 @@ const ContentBlock = ({ content }) => {
                         />
                     ),
                     li: ({ node, ...props }) => (
-                        <li className="flex items-start gap-[length:var(--resume-item-gap)]">
+                        <li className="flex items-start gap-[length:calc(var(--resume-item-gap)*2)]">
                             <div className="w-[length:calc(var(--resume-body-size)*0.45)] h-[length:calc(var(--resume-body-size)*0.45)] rounded-full bg-gray-700 mt-[length:calc(var(--resume-body-size)*0.55)] shrink-0"></div>
                             <span>{props.children}</span>
                         </li>
