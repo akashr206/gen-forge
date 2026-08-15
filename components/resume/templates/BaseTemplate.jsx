@@ -7,7 +7,6 @@ const BaseTemplate = ({ data }) => {
 
     return (
         <div className="px-[length:var(--resume-margin)] py-[6.5cqw] flex flex-col gap-[length:var(--resume-section-gap)] font-resume-body bg-white text-gray-800">
-            {/* Header */}
             <PageBreakable id="resume-basics">
                 <div
                     className={`flex flex-col gap-[length:var(--resume-item-gap)] ${
@@ -93,7 +92,6 @@ const BaseTemplate = ({ data }) => {
                 </div>
             </PageBreakable>
 
-            {/* Sections */}
             <div className="flex flex-col gap-[length:calc(var(--resume-section-gap)*1.14)]">
                 {sections.map((section, index) => (
                     <GenericSection

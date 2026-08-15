@@ -23,7 +23,6 @@ const LandingNavbar = ({ onOpenAuth }) => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-40 bg-white/40 backdrop-blur-md border-b border-gray-200/50 transition-all duration-300">
       <div className="flex justify-between items-center w-full px-6 md:px-12 py-3.5 max-w-7xl mx-auto h-[72px]">
-        {/* Brand */}
         <Link href="/" className="flex items-center gap-2.5 group">
           <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-bold text-lg shadow-sm group-hover:scale-105 transition-transform duration-200">
             G
@@ -33,13 +32,11 @@ const LandingNavbar = ({ onOpenAuth }) => {
           </span>
         </Link>
 
-        {/* CTA & Auth Profile */}
         <div className="flex items-center gap-3">
           {status === "loading" ? (
             <div className="h-9 w-24 bg-gray-200/60 animate-pulse rounded-md" />
           ) : session?.user ? (
             <div className="flex items-center gap-3">
-              {/* Dashboard Button */}
               <Link
                 href="/dashboard"
                 className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-mono text-xs uppercase tracking-wider px-4 py-2.5 rounded-md shadow-sm transition-all duration-200 hover:shadow-indigo-500/20 hover:shadow-lg"
@@ -48,7 +45,6 @@ const LandingNavbar = ({ onOpenAuth }) => {
                 Dashboard
               </Link>
 
-              {/* User avatar with dropdown */}
               <div className="relative" ref={dropdownRef}>
                 <button
                   onClick={() => setDropdownOpen(!dropdownOpen)}

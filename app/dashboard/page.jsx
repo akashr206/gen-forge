@@ -17,6 +17,16 @@ import {
   FilePlus,
   Loader2,
 } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 export default function DashboardPage() {
   const { data: session } = useSession();
@@ -27,6 +37,7 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const [creating, setCreating] = useState(false);
   const [deletingId, setDeletingId] = useState(null);
+  const [deleteTarget, setDeleteTarget] = useState(null);
   const dropdownRef = useRef(null);
 
   useEffect(() => {
@@ -83,14 +94,15 @@ export default function DashboardPage() {
     }
   };
 
-  const handleDeleteResume = async (id, title, e) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const openDeleteDialog = (id, title, e) => {
+    e?.preventDefault();
+    e?.stopPropagation();
+    setDeleteTarget({ id, title });
+  };
 
-    if (!window.confirm(`Are you sure you want to delete "${title || "this resume"}"?`)) {
-      return;
-    }
-
+  const confirmDelete = async () => {
+    if (!deleteTarget) return;
+    const { id } = deleteTarget;
     try {
       setDeletingId(id);
       const res = await fetch(`/api/resumes/${id}`, {
@@ -99,14 +111,12 @@ export default function DashboardPage() {
 
       if (res.ok) {
         setResumes((prev) => prev.filter((r) => (r._id || r.id) !== id));
-      } else {
-        alert("Failed to delete resume.");
       }
     } catch (err) {
       console.error("Delete resume error:", err);
-      alert("An error occurred while deleting.");
     } finally {
       setDeletingId(null);
+      setDeleteTarget(null);
     }
   };
 
@@ -301,7 +311,7 @@ export default function DashboardPage() {
                           <Download className="w-4 h-4" />
                         </Link>
                         <button
-                          onClick={(e) => handleDeleteResume(targetId, resume.title, e)}
+                          onClick={(e) => openDeleteDialog(targetId, resume.title, e)}
                           disabled={isDeleting}
                           className="p-3 bg-white text-red-500 rounded-full shadow-lg hover:bg-red-600 hover:text-white transition-colors duration-200 transform hover:scale-110 disabled:opacity-50"
                           title="Delete Resume"
@@ -336,7 +346,7 @@ export default function DashboardPage() {
                         </Link>
 
                         <button
-                          onClick={(e) => handleDeleteResume(targetId, resume.title, e)}
+                          onClick={(e) => openDeleteDialog(targetId, resume.title, e)}
                           disabled={isDeleting}
                           className="text-xs font-mono text-gray-400 hover:text-red-600 transition-colors inline-flex items-center gap-1"
                           title="Delete Resume"
@@ -368,6 +378,26 @@ export default function DashboardPage() {
           </>
         )}
       </main>
+
+      <AlertDialog open={!!deleteTarget} onOpenChange={(open) => { if (!open) setDeleteTarget(null); }}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Resume</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to permanently delete &quot;{deleteTarget?.title || "this resume"}&quot;? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={confirmDelete}
+              className="bg-red-600 text-white hover:bg-red-700"
+            >
+              {deletingId ? "Deleting..." : "Delete"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

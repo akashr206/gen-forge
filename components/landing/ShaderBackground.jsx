@@ -140,9 +140,8 @@ const ShaderBackground = () => {
         let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
 
         const handleMouseMove = (event) => {
-            // Calculate cursor position in client space
             const nx = event.clientX;
-            const ny = window.innerHeight - event.clientY; // Flip Y for WebGL coordinates
+            const ny = window.innerHeight - event.clientY;
             mouse.x = nx;
             mouse.y = ny;
         };

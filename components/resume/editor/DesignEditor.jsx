@@ -1,5 +1,6 @@
 import React from 'react';
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const FONTS = [
   "Latin Modern Sans",
@@ -92,24 +93,30 @@ const DesignEditor = ({ design = {}, onChange }) => {
     <div className="flex flex-col gap-6">
       <div className="grid gap-2">
         <Label>Header Font</Label>
-        <select 
-          className="h-auto w-full min-w-0 rounded border border-input bg-transparent px-4 py-4 text-[16px] transition-all outline-none focus-visible:border-primary focus-visible:ring-0 focus-visible:shadow-[0_0_20px_rgba(79,70,229,0.15)] cursor-pointer"
-          value={design.headerFont || "Helvetica"}
-          onChange={(e) => handleChange('headerFont', e.target.value)}
-        >
-          {FONTS.map(font => <option key={font} value={font}>{font}</option>)}
-        </select>
+        <Select value={design.headerFont || "Helvetica"} onValueChange={(val) => handleChange('headerFont', val)}>
+          <SelectTrigger className="h-auto w-full rounded border border-input bg-transparent px-4 py-3 text-sm cursor-pointer">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {FONTS.map(font => (
+              <SelectItem key={font} value={font}>{font}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
 
       <div className="grid gap-2">
         <Label>Body Font</Label>
-        <select 
-          className="h-auto w-full min-w-0 rounded border border-input bg-transparent px-4 py-4 text-[16px] transition-all outline-none focus-visible:border-primary focus-visible:ring-0 focus-visible:shadow-[0_0_20px_rgba(79,70,229,0.15)] cursor-pointer"
-          value={design.bodyFont || "Roboto"}
-          onChange={(e) => handleChange('bodyFont', e.target.value)}
-        >
-          {FONTS.map(font => <option key={font} value={font}>{font}</option>)}
-        </select>
+        <Select value={design.bodyFont || "Roboto"} onValueChange={(val) => handleChange('bodyFont', val)}>
+          <SelectTrigger className="h-auto w-full rounded border border-input bg-transparent px-4 py-3 text-sm cursor-pointer">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {FONTS.map(font => (
+              <SelectItem key={font} value={font}>{font}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
 
       <div className="grid gap-4 mt-4">

@@ -11,7 +11,6 @@ const PreviewShowcase = ({ onOpenAuth }) => {
   return (
     <section className="px-6 max-w-6xl mx-auto mb-24">
       <div className="relative rounded-2xl p-2 bg-gradient-to-b from-indigo-100/60 to-white/40 shadow-2xl border border-white/80 backdrop-blur-xl">
-        {/* Mock Top Window Bar */}
         <div className="h-10 px-4 bg-white/70 backdrop-blur-md rounded-t-xl border-b border-gray-200/50 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 rounded-full bg-red-400/80" />
@@ -44,9 +43,7 @@ const PreviewShowcase = ({ onOpenAuth }) => {
           </div>
         </div>
 
-        {/* Split-Pane Simulation */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 bg-gray-50/50 rounded-b-xl overflow-hidden min-h-[460px]">
-          {/* Left Editor Simulation */}
           <div className="lg:col-span-5 p-6 border-r border-gray-200/60 bg-white/60 flex flex-col justify-between">
             <div className="space-y-4">
               <div className="flex items-center justify-between pb-3 border-b border-gray-200/60">
@@ -58,7 +55,6 @@ const PreviewShowcase = ({ onOpenAuth }) => {
                 </span>
               </div>
 
-              {/* Mock Fields */}
               <div className="space-y-3">
                 <div>
                   <label className="text-[10px] font-mono uppercase tracking-wider text-gray-400 block mb-1">
@@ -97,10 +93,8 @@ const PreviewShowcase = ({ onOpenAuth }) => {
             </div>
           </div>
 
-          {/* Right Live Resume Simulation */}
           <div className="lg:col-span-7 p-6 sm:p-8 flex items-center justify-center bg-slate-100/60 overflow-hidden relative">
             <div className="w-full max-w-[420px] bg-white shadow-xl rounded-sm p-6 sm:p-8 border border-gray-200/80 font-serif transform hover:scale-[1.01] transition-transform duration-300">
-              {/* Resume Header */}
               <div className="text-center pb-4 border-b border-gray-200 mb-4">
                 <h2 className="text-xl font-bold text-gray-900 tracking-tight">John Doe</h2>
                 <p className="text-xs text-gray-600 font-sans mt-0.5">Senior Full Stack Engineer</p>
@@ -113,7 +107,6 @@ const PreviewShowcase = ({ onOpenAuth }) => {
                 </p>
               </div>
 
-              {/* Resume Section */}
               <div className="space-y-3 text-left">
                 <div>
                   <h3 className="text-xs font-bold text-gray-800 uppercase tracking-wider border-b border-gray-200 pb-1 mb-2 font-sans">

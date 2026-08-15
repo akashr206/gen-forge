@@ -107,13 +107,11 @@ const ResumeViewer = ({ data }) => {
   const headerFont = data?.design?.headerFont;
   const bodyFont = data?.design?.bodyFont;
 
-  // Font loading effect
   useEffect(() => {
     let isMounted = true;
     setFontsReady(false);
     
     const loadFonts = async () => {
-      // Give React a tick to inject the <link> tags first
       await new Promise(resolve => setTimeout(resolve, 50));
       await document.fonts.ready;
       if (isMounted) {
@@ -125,7 +123,6 @@ const ResumeViewer = ({ data }) => {
     return () => { isMounted = false; };
   }, [headerFont, bodyFont]);
 
-  // Pagination effect
   useEffect(() => {
     if (!data || !fontsReady) return;
 
@@ -143,7 +140,7 @@ const ResumeViewer = ({ data }) => {
       const width = containerRect.width; 
       const pageHeight = width * 1.414; 
       
-      const verticalMargin = width * 0.065; // Matches py-[6.5cqw] from BaseTemplate
+      const verticalMargin = width * 0.065;
       const maxBottomCoordinate = pageHeight - verticalMargin;
 
       const calculatedPages = [];
@@ -151,7 +148,6 @@ const ResumeViewer = ({ data }) => {
       
       elements.forEach((el) => {
         const rect = el.getBoundingClientRect();
-        // Calculate absolute visual offset relative to the hidden continuous container
         const offsetTop = rect.top - containerRect.top;
         const height = rect.height;
         

@@ -10,13 +10,7 @@ const HeroSection = ({ onOpenAuth }) => {
 
   return (
     <section className="min-h-[75vh] flex flex-col justify-center items-center px-6 text-center pt-28 pb-16 relative">
-      {/* Pill Badge */}
-      <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/70 backdrop-blur-md border border-indigo-100/80 text-indigo-700 text-xs font-mono mb-8 shadow-sm">
-        <Sparkles className="w-3.5 h-3.5 text-indigo-600" />
-        <span>AI Precision • Automated Resume Engine</span>
-      </div>
 
-      {/* Main Title */}
       <h1 className="font-ui text-5xl sm:text-6xl md:text-7xl lg:text-[84px] leading-[1.05] tracking-tight text-gray-900 max-w-4xl mx-auto mb-6 font-bold">
         Your Career,
         <br />
@@ -25,14 +19,12 @@ const HeroSection = ({ onOpenAuth }) => {
         </span>
       </h1>
 
-      {/* Subtitle */}
       <p className="font-ui text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed">
         Experience invisible efficiency. GenX structures your professional
         narrative with uncompromising technical precision, delivering a
         flawless resume without the cognitive load.
       </p>
 
-      {/* Primary CTA */}
       <div className="flex flex-col sm:flex-row items-center gap-4">
         {session?.user ? (
           <Link

@@ -42,7 +42,6 @@ const Navbar = () => {
           Export PDF
         </button>
 
-        {/* User profile dropdown */}
         <div className="relative" ref={dropdownRef}>
           <button 
             onClick={() => setDropdownOpen(!dropdownOpen)}

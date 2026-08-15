@@ -30,7 +30,6 @@ export default function LandingPageClient() {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const router = useRouter();
 
-  // Initialize Lenis Smooth Scroll
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
@@ -58,7 +57,6 @@ export default function LandingPageClient() {
 
   const handleCloseAuth = useCallback(() => {
     setIsAuthOpen(false);
-    // Remove query params like ?auth=login from the URL bar on close
     if (typeof window !== "undefined" && window.location.search.includes("auth=")) {
       router.replace("/", { scroll: false });
     }
@@ -66,18 +64,14 @@ export default function LandingPageClient() {
 
   return (
     <div className="relative min-h-screen flex flex-col justify-between overflow-x-hidden font-ui selection:bg-indigo-600 selection:text-white">
-      {/* Interactive WebGL Wave Shader Background */}
       <ShaderBackground />
 
-      {/* URL Auth param detector */}
       <Suspense fallback={null}>
         <AuthParamsListener onTriggerAuth={handleOpenAuth} />
       </Suspense>
 
-      {/* Navigation */}
       <LandingNavbar onOpenAuth={handleOpenAuth} />
 
-      {/* Main Sections */}
       <main className="relative z-10 flex-1 flex flex-col">
         <HeroSection onOpenAuth={handleOpenAuth} />
         <PreviewShowcase onOpenAuth={handleOpenAuth} />
@@ -85,10 +79,8 @@ export default function LandingPageClient() {
         <FeaturesSection />
       </main>
 
-      {/* Footer */}
       <LandingFooter />
 
-      {/* Login Popup Modal */}
       <AuthModal
         isOpen={isAuthOpen}
         onClose={handleCloseAuth}

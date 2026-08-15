@@ -37,7 +37,6 @@ const TimelineRenderer = ({ section }) => {
                                     )}
                                     {item.date && <span>{item.date}</span>}
 
-                                    {/* Legacy support for liveUrl/githubUrl/link if they exist, merged into links logic */}
                                     {(() => {
                                         const allLinks = [
                                             ...(item.links || []),

@@ -5,7 +5,6 @@ import { Bold, Italic, List } from "lucide-react";
 const MarkdownEditor = ({ value, onChange, placeholder }) => {
   const textareaRef = useRef(null);
 
-  // Helper to safely parse old array data to markdown string
   const getSafeValue = () => {
     if (!value) return '';
     if (typeof value === 'string') return value;
