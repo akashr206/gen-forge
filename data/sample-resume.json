@@ -20,7 +20,11 @@
     "email": "john.doe@example.com",
     "phone": "+1 (555) 123-4567",
     "location": "New York, NY",
-    "alignment": "center"
+    "alignment": "center",
+    "links": [
+      { "label": "github.com/johndoe", "url": "https://github.com/johndoe" },
+      { "label": "johndoe.dev", "url": "https://johndoe.dev" }
+    ]
   },
   "sections": [
     {

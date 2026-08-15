@@ -143,15 +143,17 @@ const ResumeViewer = ({ data }) => {
       const width = containerRect.width; 
       const pageHeight = width * 1.414; 
       
-      const actualMargin = (data.design?.margin ?? 56) * (width / 793.7);
-      const maxBottomCoordinate = pageHeight - actualMargin;
+      const verticalMargin = width * 0.065; // Matches py-[6.5cqw] from BaseTemplate
+      const maxBottomCoordinate = pageHeight - verticalMargin;
 
       const calculatedPages = [];
       let currentPage = { shiftY: 0, visibleIds: new Set() };
       
       elements.forEach((el) => {
-        const offsetTop = el.offsetTop;
-        const height = el.offsetHeight;
+        const rect = el.getBoundingClientRect();
+        // Calculate absolute visual offset relative to the hidden continuous container
+        const offsetTop = rect.top - containerRect.top;
+        const height = rect.height;
         
         const relativeTop = offsetTop - currentPage.shiftY;
         
@@ -159,7 +161,7 @@ const ResumeViewer = ({ data }) => {
           calculatedPages.push(currentPage);
           
           currentPage = {
-            shiftY: offsetTop - actualMargin,
+            shiftY: offsetTop - verticalMargin,
             visibleIds: new Set([el.id])
           };
         } else {
