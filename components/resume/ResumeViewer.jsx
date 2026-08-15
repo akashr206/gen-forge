@@ -180,6 +180,22 @@ const ResumeViewer = ({ data }) => {
   const headerFontConfig = FONT_CONFIG[data.design?.headerFont] || FONT_CONFIG["Helvetica"];
   const bodyFontConfig = FONT_CONFIG[data.design?.bodyFont] || FONT_CONFIG["Roboto"];
 
+  const pxToCqw = (px) => (px / 793.7) * 100;
+  
+  const cssVariables = {
+    '--resume-header-font': headerFontConfig.family,
+    '--resume-body-font': bodyFontConfig.family,
+    '--resume-margin': `${pxToCqw(data.design?.margin ?? 56)}cqw`,
+    '--resume-section-gap': `${pxToCqw(data.design?.sectionGap ?? 28)}cqw`,
+    '--resume-item-gap': `${pxToCqw(data.design?.itemGap ?? 8)}cqw`,
+    '--resume-title-size': `${pxToCqw(data.design?.fontSizes?.title ?? 52)}cqw`,
+    '--resume-subtitle-size': `${pxToCqw(data.design?.fontSizes?.subtitle ?? 22)}cqw`,
+    '--resume-heading-size': `${pxToCqw(data.design?.fontSizes?.sectionHeader ?? 24)}cqw`,
+    '--resume-item-title-size': `${pxToCqw(data.design?.fontSizes?.itemTitle ?? 18)}cqw`,
+    '--resume-item-subtitle-size': `${pxToCqw(data.design?.fontSizes?.itemSubtitle ?? 16)}cqw`,
+    '--resume-body-size': `${pxToCqw(data.design?.fontSizes?.body ?? 14)}cqw`
+  };
+
   return (
     <div 
       className="w-full h-full relative overflow-y-auto overflow-x-hidden print:bg-white print:overflow-visible flex flex-col items-center print:h-auto print:block"
@@ -195,8 +211,7 @@ const ResumeViewer = ({ data }) => {
         className="absolute top-0 left-0 opacity-0 pointer-events-none -z-10 overflow-hidden w-[210mm] shrink-0 bg-white @container" 
         style={{ 
           visibility: 'hidden',
-          '--resume-header-font': headerFontConfig.family,
-          '--resume-body-font': bodyFontConfig.family
+          ...cssVariables
         }}
       >
         <div id="hidden-continuous-resume" className="relative w-full">
@@ -216,8 +231,7 @@ const ResumeViewer = ({ data }) => {
             className="w-[210mm] shrink-0 bg-white shadow-xl @container print:shadow-none print:w-[210mm] print:m-0 print:break-after-page print:break-inside-avoid relative overflow-hidden"
             style={{ 
               height: '297mm',
-              '--resume-header-font': headerFontConfig.family,
-              '--resume-body-font': bodyFontConfig.family
+              ...cssVariables
             }}
           >
             <div style={{ transform: `translateY(-${page.shiftY}px)` }} className="w-full relative">

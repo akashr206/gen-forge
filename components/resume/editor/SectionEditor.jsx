@@ -1,9 +1,8 @@
 import React from 'react';
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import MarkdownEditor from './MarkdownEditor';
 import TimelineEditor from './TimelineEditor';
-import TagsEditor from './TagsEditor';
 
 const SectionEditor = ({ section, onChange }) => {
   const handleChange = (field, value) => {
@@ -23,7 +22,7 @@ const SectionEditor = ({ section, onChange }) => {
       <div className="grid gap-2 mt-2">
         <Label>Section Type</Label>
         <div className="flex flex-wrap gap-2">
-          {['text', 'timeline', 'tags'].map((t) => (
+          {['text', 'timeline'].map((t) => (
             <button
               key={t}
               onClick={() => handleChange('type', t)}
@@ -42,10 +41,10 @@ const SectionEditor = ({ section, onChange }) => {
       {section.type === 'text' && (
         <div className="grid gap-2 mt-2">
           <Label>Content</Label>
-          <Textarea 
-            value={section.content || ''} 
-            onChange={(e) => handleChange('content', e.target.value)}
-            rows={5}
+          <MarkdownEditor 
+            value={section.content} 
+            onChange={(val) => handleChange('content', val)}
+            placeholder="Write your section content here..."
           />
         </div>
       )}
@@ -54,13 +53,6 @@ const SectionEditor = ({ section, onChange }) => {
         <div className="mt-2">
           <Label className="mb-2 block">Timeline Items</Label>
           <TimelineEditor items={section.items || []} onChange={(items) => handleChange('items', items)} />
-        </div>
-      )}
-
-      {section.type === 'tags' && (
-        <div className="mt-2">
-          <Label className="mb-2 block">Tag Groups</Label>
-          <TagsEditor groups={section.groups || []} onChange={(groups) => handleChange('groups', groups)} />
         </div>
       )}
     </div>

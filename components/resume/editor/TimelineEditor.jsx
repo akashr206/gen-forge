@@ -1,7 +1,7 @@
 import React from 'react';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
+import MarkdownEditor from './MarkdownEditor';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Plus, Trash2 } from "lucide-react";
 
@@ -17,23 +17,7 @@ const TimelineEditor = ({ items, onChange }) => {
   };
 
   const addItem = () => {
-    onChange([...items, { primary: "New Item", secondary: "", date: "", location: "", content: [] }]);
-  };
-
-  const handleContentStringChange = (index, text) => {
-    const content = text.split('\n').filter(line => line.trim() !== '').map(line => {
-      const trimmed = line.trim();
-      if (trimmed.startsWith('-') || trimmed.startsWith('*')) {
-        return { type: 'bullet', text: trimmed.substring(1).trim() };
-      }
-      return { type: 'paragraph', text: trimmed };
-    });
-    updateItem(index, 'content', content);
-  };
-
-  const getContentString = (contentArray) => {
-    if (!contentArray) return "";
-    return contentArray.map(c => c.type === 'bullet' ? `- ${c.text}` : c.text).join('\n\n');
+    onChange([...items, { primary: "New Item", secondary: "", date: "", location: "", content: "" }]);
   };
 
   return (
@@ -69,11 +53,11 @@ const TimelineEditor = ({ items, onChange }) => {
                 </div>
               </div>
               <div className="grid gap-1 mt-2">
-                <span className="text-xs font-medium text-gray-500">Description (Start with '-' for bullets, separated by newlines)</span>
-                <Textarea 
-                  value={getContentString(item.content)} 
-                  onChange={(e) => handleContentStringChange(index, e.target.value)}
-                  rows={4}
+                <span className="text-xs font-medium text-gray-500">Description</span>
+                <MarkdownEditor 
+                  value={item.content} 
+                  onChange={(val) => updateItem(index, 'content', val)}
+                  placeholder="Describe your role..."
                 />
               </div>
             </AccordionContent>

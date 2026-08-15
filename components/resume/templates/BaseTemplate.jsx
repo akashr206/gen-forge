@@ -6,27 +6,22 @@ const BaseTemplate = ({ data }) => {
   const { basics, sections } = data;
 
   return (
-    <div className="p-[7cqw] flex flex-col gap-[3.5cqw] font-resume-body bg-white text-gray-800">
+    <div className="p-[length:var(--resume-margin)] flex flex-col gap-[length:var(--resume-section-gap)] font-resume-body bg-white text-gray-800">
       {/* Header */}
       <PageBreakable id="resume-basics">
-        <header className="flex flex-col gap-[1.2cqw] border-b-[0.4cqw] border-gray-300 pb-[3cqw]">
-          <h1 className="text-[6.5cqw] font-bold leading-tight text-gray-900 font-resume-header">{basics.name}</h1>
-          <h2 className="text-[2.8cqw] font-medium text-gray-600 font-resume-header">{basics.title}</h2>
-          <ul className="flex flex-wrap gap-x-[2.5cqw] gap-y-[1cqw] text-[1.8cqw] text-gray-500 mt-[0.5cqw]">
+        <div className="flex flex-col gap-[length:var(--resume-item-gap)] ">
+          <h1 className="text-[length:var(--resume-title-size)] font-bold leading-tight text-gray-900 font-resume-header">{basics.name}</h1>
+          <h2 className="text-[length:var(--resume-subtitle-size)] font-medium text-gray-600 font-resume-header">{basics.title}</h2>
+          <ul className="flex flex-wrap gap-x-[length:calc(var(--resume-item-gap)*2.5)] gap-y-[length:var(--resume-item-gap)] text-[length:var(--resume-body-size)] text-gray-500 mt-[length:calc(var(--resume-item-gap)/2)]">
             {basics.email && <li>{basics.email}</li>}
             {basics.phone && <li>{basics.phone}</li>}
             {basics.location && <li>{basics.location}</li>}
           </ul>
-          {basics.summary && (
-            <div className="mt-[2cqw] text-[1.8cqw] text-gray-700 leading-relaxed whitespace-pre-wrap">
-              {basics.summary}
-            </div>
-          )}
-        </header>
+        </div>
       </PageBreakable>
 
       {/* Sections */}
-      <div className="flex flex-col gap-[4cqw]">
+      <div className="flex flex-col gap-[length:calc(var(--resume-section-gap)*1.14)]">
         {sections.map((section, index) => (
           <GenericSection key={section.id || index} section={section} />
         ))}

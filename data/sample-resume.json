@@ -1,17 +1,33 @@
 {
   "design": {
-    "headerFont": "Helvetica",
-    "bodyFont": "Roboto"
+    "headerFont": "TeX Gyre Pagella",
+    "bodyFont": "Noto Sans",
+    "margin": 56,
+    "sectionGap": 28,
+    "itemGap": 8,
+    "fontSizes": {
+      "title": 52,
+      "subtitle": 22,
+      "sectionHeader": 20,
+      "itemTitle": 18,
+      "itemSubtitle": 16,
+      "body": 14
+    }
   },
   "basics": {
     "name": "John Doe",
     "title": "Full Stack Developer",
     "email": "john.doe@example.com",
     "phone": "+1 (555) 123-4567",
-    "location": "New York, NY",
-    "summary": "Highly motivated and detail-oriented Full Stack Developer with over 5 years of experience in building scalable web applications. Proficient in modern JavaScript frameworks, responsive design, and robust backend architectures. Passionate about writing clean, maintainable code and solving complex technical challenges."
+    "location": "New York, NY"
   },
   "sections": [
+    {
+      "id": "summary",
+      "heading": "Professional Summary",
+      "type": "text",
+      "content": "Highly motivated and detail-oriented Full Stack Developer with over 5 years of experience in building scalable web applications. Proficient in modern JavaScript frameworks, responsive design, and robust backend architectures. Passionate about writing clean, maintainable code and solving complex technical challenges."
+    },
     {
       "id": "experience",
       "heading": "Experience",
@@ -22,36 +38,14 @@
           "secondary": "Tech Innovations Inc.",
           "date": "Jan 2021 - Present",
           "location": "Remote",
-          "content": [
-            {
-              "type": "paragraph",
-              "text": "Led the core development team in migrating a legacy monolithic application to a microservices architecture using Node.js and Docker."
-            },
-            {
-              "type": "bullet",
-              "text": "Reduced average page load time by 40% through extensive frontend optimization and caching strategies."
-            },
-            {
-              "type": "bullet",
-              "text": "Mentored 3 junior developers and established code review guidelines that decreased production bugs by 25%."
-            }
-          ]
+          "content": "Led the core development team in migrating a legacy monolithic application to a microservices architecture using **Node.js** and **Docker**.\n\n- Reduced average page load time by **40%** through extensive frontend optimization and caching strategies.\n- Mentored **3 junior developers** and established code review guidelines that decreased production bugs by **25%**."
         },
         {
           "primary": "Frontend Developer",
           "secondary": "Creative Web Solutions",
           "date": "Jun 2018 - Dec 2020",
           "location": "New York, NY",
-          "content": [
-            {
-              "type": "bullet",
-              "text": "Developed responsive, accessible, and interactive user interfaces using React and Redux."
-            },
-            {
-              "type": "bullet",
-              "text": "Collaborated closely with designers to implement pixel-perfect implementations of Figma prototypes."
-            }
-          ]
+          "content": "- Developed responsive, accessible, and interactive user interfaces using **React** and **Redux**.\n- Collaborated closely with designers to implement **pixel-perfect** implementations of Figma prototypes."
         }
       ]
     },
@@ -65,37 +59,15 @@
           "secondary": "State University",
           "date": "Aug 2014 - May 2018",
           "location": "Springfield, IL",
-          "content": [
-            {
-              "type": "bullet",
-              "text": "Graduated with Honors, GPA: 3.8/4.0"
-            },
-            {
-              "type": "bullet",
-              "text": "Senior Capstone Project: Built an AI-driven course recommendation system for students."
-            }
-          ]
+          "content": "- Graduated with Honors, GPA: 3.8/4.0\n- Senior Capstone Project: Built an AI-driven course recommendation system for students."
         }
       ]
     },
     {
       "id": "skills",
       "heading": "Technical Skills",
-      "type": "tags",
-      "groups": [
-        {
-          "category": "Languages",
-          "items": ["JavaScript (ES6+)", "TypeScript", "Python", "HTML5", "CSS3"]
-        },
-        {
-          "category": "Frameworks & Libraries",
-          "items": ["React", "Next.js", "Node.js", "Express", "Tailwind CSS"]
-        },
-        {
-          "category": "Tools & Platforms",
-          "items": ["Git", "Docker", "AWS", "Figma", "Vercel"]
-        }
-      ]
+      "type": "text",
+      "content": "**Languages:** JavaScript (ES6+), TypeScript, Python, HTML5, CSS3\n\n**Frameworks & Libraries:** React, Next.js, Node.js, Express, Tailwind CSS\n\n**Tools & Platforms:** Git, Docker, AWS, Figma, Vercel"
     }
   ]
 }

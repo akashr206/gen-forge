@@ -53,14 +53,6 @@ const BasicsEditor = ({ basics, onChange }) => {
         />
       </div>
 
-      <div className="grid gap-2">
-        <Label>Professional Summary</Label>
-        <Textarea 
-          value={basics.summary || ''} 
-          onChange={(e) => handleChange('summary', e.target.value)}
-          rows={5}
-        />
-      </div>
     </div>
   );
 };
