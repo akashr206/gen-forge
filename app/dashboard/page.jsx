@@ -70,28 +70,7 @@ export default function DashboardPage() {
   }, []);
 
   const handleCreateResume = async () => {
-    try {
-      setCreating(true);
-      const res = await fetch("/api/resumes", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          title: `${session?.user?.name || "My"} Resume`,
-        }),
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-        router.push(`/resume?id=${data.resume._id}`);
-      } else {
-        router.push("/resume");
-      }
-    } catch (e) {
-      console.error("Error creating resume:", e);
-      router.push("/resume");
-    } finally {
-      setCreating(false);
-    }
+    router.push("/create");
   };
 
   const openDeleteDialog = (id, title, e) => {

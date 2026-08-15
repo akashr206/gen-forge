@@ -12,6 +12,27 @@ const ResumePage = () => {
   const [resumeData, setResumeData] = useState(initialData);
 
   React.useEffect(() => {
+    // Check if there is a generated resume in session storage
+    const generated = sessionStorage.getItem('generatedResume');
+    if (generated) {
+      try {
+        const parsed = JSON.parse(generated);
+        // Merge the AI generated content with the default design parameters
+        const mergedData = {
+          ...parsed,
+          design: initialData.design
+        };
+        setEditorData(mergedData);
+        setResumeData(mergedData);
+        // Clear it so it doesn't stay indefinitely
+        sessionStorage.removeItem('generatedResume');
+      } catch (err) {
+        console.error("Failed to parse generated resume from session storage", err);
+      }
+    }
+  }, []);
+
+  React.useEffect(() => {
     const handler = setTimeout(() => {
       setResumeData(editorData);
     }, 500);

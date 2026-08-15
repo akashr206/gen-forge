@@ -3,10 +3,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Download, LogOut, User as UserIcon } from 'lucide-react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useSession, signOut } from 'next-auth/react';
 
 const Navbar = () => {
   const { data: session } = useSession();
+  const pathname = usePathname();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -34,13 +36,15 @@ const Navbar = () => {
       </Link>
 
       <div className="flex items-center gap-3">
-        <button 
-          onClick={handleExport}
-          className="flex items-center gap-1.5 px-3.5 py-1.5 text-sm bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-md shadow-xs transition-colors"
-        >
-          <Download className="w-3.5 h-3.5" />
-          Export PDF
-        </button>
+        {pathname === '/resume' && (
+          <button 
+            onClick={handleExport}
+            className="flex items-center gap-1.5 px-3.5 py-1.5 text-sm bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-md shadow-xs transition-colors"
+          >
+            <Download className="w-3.5 h-3.5" />
+            Export PDF
+          </button>
+        )}
 
         <div className="relative" ref={dropdownRef}>
           <button 
