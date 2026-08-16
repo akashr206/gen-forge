@@ -1,5 +1,7 @@
 # GenX - AI Resume Builder
 
+**[Live Demo](https://gennnx.vercel.app)** | **[Watch Demo Video](https://youtu.be/I_7wtjNfD_A)**
+
 GenX is an intelligent, easy-to-use resume builder that takes your raw experience and automatically transforms it into a highly polished, ATS-friendly professional resume.
 
 ---
