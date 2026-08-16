@@ -17,9 +17,65 @@ const Navbar = ({ title, onTitleChange }) => {
   const handleExport = async () => {
     setIsExporting(true);
     try {
-      const html = document.documentElement.outerHTML;
+      const styleTags = Array.from(document.querySelectorAll('style')).map(el => el.outerHTML);
       
-      const htmlWithBase = html.replace('<head>', `<head><base href="${window.location.origin}">`);
+      const linkTags = Array.from(document.querySelectorAll('link[rel="stylesheet"]'));
+      const fetchedStyles = await Promise.all(linkTags.map(async (link) => {
+        try {
+          const res = await fetch(link.href);
+          const css = await res.text();
+          return `<style>${css}</style>`;
+        } catch (e) {
+          console.warn('Could not fetch stylesheet', link.href);
+          return link.outerHTML;
+        }
+      }));
+
+      const allStyles = [...styleTags, ...fetchedStyles].join('\n');
+
+      const htmlClasses = document.documentElement.className;
+      const bodyClasses = document.body.className;
+
+      const containerNode = document.getElementById('resume-print-container');
+      const innerNode = document.getElementById('hidden-continuous-resume');
+      
+      if (!containerNode || !innerNode) throw new Error('Resume container not found');
+
+      const cleanContainer = document.createElement('div');
+      cleanContainer.className = "w-[210mm] bg-white @container mx-auto";
+      cleanContainer.style.cssText = containerNode.style.cssText;
+      cleanContainer.innerHTML = innerNode.outerHTML;
+      
+      const printStyles = `
+        <style>
+          @media print {
+            @page {
+              margin-top: 13.65mm;
+              margin-bottom: 13.65mm;
+              margin-left: 0;
+              margin-right: 0;
+            }
+            #hidden-continuous-resume > div {
+              padding-top: 0 !important;
+              padding-bottom: 0 !important;
+            }
+          }
+        </style>
+      `;
+
+      const cleanHtml = `
+        <!DOCTYPE html>
+        <html class="${htmlClasses}">
+          <head>
+            <base href="${window.location.origin}">
+            ${printStyles}
+            ${allStyles}
+          </head>
+          <body class="${bodyClasses} bg-white m-0 p-0 flex justify-center">
+            ${cleanContainer.outerHTML}
+          </body>
+        </html>
+      `;
 
       const pdfServiceUrl = process.env.NEXT_PUBLIC_PDF_SERVICE_URL || 'http://localhost:3001/api/generate-pdf';
       
@@ -28,7 +84,7 @@ const Navbar = ({ title, onTitleChange }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ html: htmlWithBase }),
+        body: JSON.stringify({ html: cleanHtml }),
       });
 
       if (!response.ok) {

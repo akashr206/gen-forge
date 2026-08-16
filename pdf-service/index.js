@@ -25,17 +25,11 @@ const exportLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-app.post('/api/generate-pdf', exportLimiter, async (req, res) => {
-  const { html } = req.body;
+let browserInstance = null;
 
-  if (!html) {
-    return res.status(400).json({ error: 'HTML content is required' });
-  }
-
-  let browser;
-  
-  try {
-    browser = await puppeteer.launch({
+async function getBrowser() {
+  if (!browserInstance) {
+    browserInstance = await puppeteer.launch({
       headless: 'new',
       args: [
         '--no-sandbox',
@@ -45,26 +39,38 @@ app.post('/api/generate-pdf', exportLimiter, async (req, res) => {
       ],
       executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || null,
     });
+    browserInstance.on('disconnected', () => {
+      browserInstance = null;
+    });
+  }
+  return browserInstance;
+}
 
-    const page = await browser.newPage();
+app.post('/api/generate-pdf', exportLimiter, async (req, res) => {
+  const { html } = req.body;
 
-    await page.setContent(html, { waitUntil: 'networkidle0' });
+  if (!html) {
+    return res.status(400).json({ error: 'HTML content is required' });
+  }
+
+  let page;
+  try {
+    const browser = await getBrowser();
+    page = await browser.newPage();
+
+    await page.setContent(html, { waitUntil: 'domcontentloaded' });
+
+    await page.evaluateHandle('document.fonts.ready');
 
     await page.setViewport({ width: 794, height: 1122, deviceScaleFactor: 2 });
 
     const pdfBuffer = await page.pdf({
       format: 'A4',
       printBackground: true,
-      margin: {
-        top: '0px',
-        bottom: '0px',
-        left: '0px',
-        right: '0px',
-      },
       preferCSSPageSize: true,
     });
 
-    await browser.close();
+    await page.close();
 
     res.set({
       'Content-Type': 'application/pdf',
@@ -75,7 +81,7 @@ app.post('/api/generate-pdf', exportLimiter, async (req, res) => {
     res.status(200).send(pdfBuffer);
   } catch (error) {
     console.error('Error generating PDF:', error);
-    if (browser) await browser.close();
+    if (page) await page.close().catch(() => {});
     res.status(500).json({ error: 'Failed to generate PDF', details: error.message });
   }
 });

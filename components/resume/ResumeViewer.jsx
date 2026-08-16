@@ -187,11 +187,9 @@ const ResumeViewer = ({ data, hideUI = false }) => {
       {bodyFontConfig.url && bodyFontConfig.url !== headerFontConfig.url && <link href={bodyFontConfig.url} rel="stylesheet" />}
       
       <div 
-        className="absolute top-0 left-0 opacity-0 pointer-events-none -z-10 overflow-hidden w-[210mm] shrink-0 bg-white @container print:hidden" 
-        style={{ 
-          visibility: 'hidden',
-          ...cssVariables
-        }}
+        id="resume-print-container"
+        className="absolute top-0 left-0 opacity-0 pointer-events-none -z-10 overflow-hidden w-[210mm] shrink-0 bg-white @container print:opacity-100 print:relative print:pointer-events-auto print:z-auto print:overflow-visible print:w-[210mm]" 
+        style={cssVariables}
       >
         <div id="hidden-continuous-resume" className="relative w-full">
            <BaseTemplate data={data} />
@@ -199,7 +197,7 @@ const ResumeViewer = ({ data, hideUI = false }) => {
       </div>
 
       <div 
-        className={`w-full flex-1 flex flex-col items-center print:!block print:!p-0 ${hideUI ? 'py-0 px-0' : 'py-6 sm:py-12'}`}
+        className={`w-full flex-1 flex flex-col items-center print:hidden ${hideUI ? 'py-0 px-0' : 'py-6 sm:py-12'}`}
       >
         <div 
           style={{ 
@@ -220,13 +218,13 @@ const ResumeViewer = ({ data, hideUI = false }) => {
             ) : pages && pages.map((page, index) => (
               <div 
                 key={index}
-                className="w-[210mm] shrink-0 bg-white shadow-xl @container print:shadow-none print:w-[210mm] print:m-0 print:break-after-page print:break-inside-avoid relative"
+                className="w-[210mm] shrink-0 bg-white shadow-xl @container relative overflow-hidden"
                 style={{ 
                   height: '297mm',
                   ...cssVariables
                 }}
               >
-                <div className="w-full relative">
+                <div className="w-full relative" style={{ marginTop: `-${page.shiftY}px` }}>
                   <VisibilityContext.Provider value={page.visibleIds}>
                     <BaseTemplate data={data} />
                   </VisibilityContext.Provider>

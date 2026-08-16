@@ -9,11 +9,15 @@ const PageBreakable = ({ id, children, className = '' }) => {
   const isVisible = visibleIds ? visibleIds.has(id) : true;
 
   if (!isVisible) {
-    return <div id={id} className={`page-breakable ${className}`} style={{ display: 'none' }} />;
+    return (
+      <div id={id} className={`page-breakable print:break-inside-avoid ${className}`} style={{ visibility: 'hidden' }}>
+        {children}
+      </div>
+    );
   }
 
   return (
-    <div id={id} className={`page-breakable ${className}`}>
+    <div id={id} className={`page-breakable print:break-inside-avoid ${className}`}>
       {children}
     </div>
   );
