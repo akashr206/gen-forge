@@ -8,12 +8,12 @@ const PageBreakable = ({ id, children, className = '' }) => {
   const visibleIds = useContext(VisibilityContext);
   const isVisible = visibleIds ? visibleIds.has(id) : true;
 
+  if (!isVisible) {
+    return <div id={id} className={`page-breakable ${className}`} style={{ display: 'none' }} />;
+  }
+
   return (
-    <div 
-      id={id} 
-      className={`page-breakable ${className}`} 
-      style={{ visibility: isVisible ? 'visible' : 'hidden' }}
-    >
+    <div id={id} className={`page-breakable ${className}`}>
       {children}
     </div>
   );

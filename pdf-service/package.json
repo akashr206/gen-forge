@@ -1,0 +1,14 @@
+{
+  "name": "pdf-service",
+  "version": "1.0.0",
+  "description": "Lightweight HTML to PDF service using Puppeteer",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "puppeteer": "^22.12.1",
+    "cors": "^2.8.5"
+  }
+}

@@ -12,8 +12,44 @@ const Navbar = ({ title, onTitleChange }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  const handleExport = () => {
-    window.print();
+  const [isExporting, setIsExporting] = useState(false);
+
+  const handleExport = async () => {
+    setIsExporting(true);
+    try {
+      const html = document.documentElement.outerHTML;
+      
+      const htmlWithBase = html.replace('<head>', `<head><base href="${window.location.origin}">`);
+
+      const pdfServiceUrl = process.env.NEXT_PUBLIC_PDF_SERVICE_URL || 'http://localhost:3001/api/generate-pdf';
+      
+      const response = await fetch(pdfServiceUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ html: htmlWithBase }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to generate PDF');
+      }
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${title || 'Resume'}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Export Error:', error);
+      alert('Failed to generate PDF. Make sure your PDF service is running.');
+    } finally {
+      setIsExporting(false);
+    }
   };
 
   useEffect(() => {
@@ -68,11 +104,24 @@ const Navbar = ({ title, onTitleChange }) => {
         {pathname === '/resume' && (
           <button 
             onClick={handleExport}
-            className="flex items-center justify-center gap-1.5 p-2 sm:px-3.5 sm:py-1.5 text-xs sm:text-sm bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded shadow-xs transition-colors"
+            disabled={isExporting}
+            className="flex items-center justify-center gap-1.5 p-2 sm:px-3.5 sm:py-1.5 text-xs sm:text-sm bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-400 text-white font-medium rounded shadow-xs transition-colors"
             title="Export as PDF"
           >
-            <Download className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Export PDF</span>
+            {isExporting ? (
+              <>
+                <svg className="animate-spin w-3.5 h-3.5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span className="hidden sm:inline">Exporting...</span>
+              </>
+            ) : (
+              <>
+                <Download className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">Export PDF</span>
+              </>
+            )}
           </button>
         )}
 

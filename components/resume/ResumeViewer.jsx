@@ -187,7 +187,7 @@ const ResumeViewer = ({ data, hideUI = false }) => {
       {bodyFontConfig.url && bodyFontConfig.url !== headerFontConfig.url && <link href={bodyFontConfig.url} rel="stylesheet" />}
       
       <div 
-        className="absolute top-0 left-0 opacity-0 pointer-events-none -z-10 overflow-hidden w-[210mm] shrink-0 bg-white @container" 
+        className="absolute top-0 left-0 opacity-0 pointer-events-none -z-10 overflow-hidden w-[210mm] shrink-0 bg-white @container print:hidden" 
         style={{ 
           visibility: 'hidden',
           ...cssVariables
@@ -199,35 +199,34 @@ const ResumeViewer = ({ data, hideUI = false }) => {
       </div>
 
       <div 
-        className={`w-full flex-1 flex flex-col items-center print:block print:p-0 ${hideUI ? 'py-0 px-0' : 'py-6 sm:py-12'}`}
+        className={`w-full flex-1 flex flex-col items-center print:!block print:!p-0 ${hideUI ? 'py-0 px-0' : 'py-6 sm:py-12'}`}
       >
         <div 
           style={{ 
             width: isInitialLoad ? 'auto' : `${793.7 * zoom}px`,
             height: isInitialLoad ? 'auto' : pages ? `${(1122.5 * pages.length + Math.max(0, pages.length - 1) * 32) * zoom}px` : 'auto',
           }}
-          className="relative transition-all duration-150 print:w-auto print:h-auto"
+          className="relative transition-all duration-150 print:!w-auto print:!h-auto"
         >
           <div 
             style={{ 
-              transform: `scale(${zoom})`,
-              transformOrigin: 'top left',
+              zoom: zoom,
               width: '793.7px',
             }}
-            className="flex flex-col items-center gap-8 print:p-0 print:gap-0 print:transform-none origin-top-left transition-transform duration-150"
+            className="flex flex-col items-center gap-8 print:!p-0 print:!gap-0 print:![zoom:1] print:!w-auto origin-top-left transition-all duration-150"
           >
             {isInitialLoad ? (
               <ResumeSkeleton />
             ) : pages && pages.map((page, index) => (
               <div 
                 key={index}
-                className="w-[210mm] shrink-0 bg-white shadow-xl @container print:shadow-none print:w-[210mm] print:m-0 print:break-after-page print:break-inside-avoid relative overflow-hidden"
+                className="w-[210mm] shrink-0 bg-white shadow-xl @container print:shadow-none print:w-[210mm] print:m-0 print:break-after-page print:break-inside-avoid relative"
                 style={{ 
                   height: '297mm',
                   ...cssVariables
                 }}
               >
-                <div style={{ marginTop: `-${page.shiftY}px` }} className="w-full relative">
+                <div className="w-full relative">
                   <VisibilityContext.Provider value={page.visibleIds}>
                     <BaseTemplate data={data} />
                   </VisibilityContext.Provider>

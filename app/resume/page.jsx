@@ -148,14 +148,14 @@ const ResumePage = () => {
           )}
           
           {/* Editor Pane (Full width on mobile when selected, fixed 480-500px on desktop) */}
-          <div className={`w-full lg:w-[460px] xl:w-[500px] shrink-0 h-full border-r border-[#E2E8F0] bg-white/70 backdrop-blur-md flex flex-col z-10 print:hidden ${
+          <div className={`w-full lg:w-115 xl:w-125 shrink-0 h-full border-r border-[#E2E8F0] bg-white/70 backdrop-blur-md flex flex-col z-10 print:hidden! ${
             mobileTab === 'editor' ? 'flex' : 'hidden lg:flex'
           }`}>
             <ResumeEditor data={editorData} onChange={setEditorData} />
           </div>
 
           {/* Viewer Pane (Full width on mobile when selected, flex-1 on desktop) */}
-          <div className={`flex-1 h-full relative print:block print:h-auto print:w-auto print:overflow-visible ${
+          <div className={`flex-1 h-full relative print:block! print:h-auto! print:w-auto! print:overflow-visible! ${
             mobileTab === 'preview' ? 'block' : 'hidden lg:block'
           }`}>
             <ResumeViewer data={resumeData} />
