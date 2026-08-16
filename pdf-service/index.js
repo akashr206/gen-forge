@@ -16,11 +16,11 @@ app.use(cors({
 app.options('*', cors());
 
 app.use(express.json({ limit: '50mb' }));
-
+ 
 const exportLimiter = rateLimit({
   windowMs: 60 * 1000,
   max: 20,
-  message: { error: 'Too many PDF export requests from this IP, please try again after a minute' },
+  message: { error: 'Too many PDF export requests, please try again after a minute' },
   standardHeaders: true,
   legacyHeaders: false,
 });
@@ -47,7 +47,7 @@ async function getBrowser() {
 }
 
 app.post('/api/generate-pdf', exportLimiter, async (req, res) => {
-  const { html } = req.body;
+  const { html, margin } = req.body;
 
   if (!html) {
     return res.status(400).json({ error: 'HTML content is required' });
@@ -67,7 +67,7 @@ app.post('/api/generate-pdf', exportLimiter, async (req, res) => {
     const pdfBuffer = await page.pdf({
       format: 'A4',
       printBackground: true,
-      preferCSSPageSize: true,
+      margin: margin || { top: '0px', bottom: '0px', left: '0px', right: '0px' },
     });
 
     await page.close();

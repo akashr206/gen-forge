@@ -37,27 +37,31 @@ const Navbar = ({ title, onTitleChange }) => {
       const bodyClasses = document.body.className;
 
       const containerNode = document.getElementById('resume-print-container');
-      const innerNode = document.getElementById('hidden-continuous-resume');
+      const paginatedContainer = document.getElementById('resume-paginated-container');
       
-      if (!containerNode || !innerNode) throw new Error('Resume container not found');
+      if (!containerNode || !paginatedContainer) throw new Error('Resume container not found');
 
       const cleanContainer = document.createElement('div');
-      cleanContainer.className = "w-[210mm] bg-white @container mx-auto";
+      cleanContainer.className = "w-[210mm] bg-white @container mx-auto flex flex-col gap-0";
       cleanContainer.style.cssText = containerNode.style.cssText;
-      cleanContainer.innerHTML = innerNode.outerHTML;
+      
+      const pages = paginatedContainer.querySelectorAll('.resume-pdf-page');
+      pages.forEach((page, index) => {
+        const clone = page.cloneNode(true);
+        clone.classList.remove('shadow-xl');
+        if (index < pages.length - 1) {
+          clone.style.breakAfter = 'page';
+          clone.style.pageBreakAfter = 'always';
+        }
+        cleanContainer.appendChild(clone);
+      });
       
       const printStyles = `
         <style>
           @media print {
-            @page {
-              margin-top: 13.65mm;
-              margin-bottom: 13.65mm;
-              margin-left: 0;
-              margin-right: 0;
-            }
-            #hidden-continuous-resume > div {
-              padding-top: 0 !important;
-              padding-bottom: 0 !important;
+            body {
+              -webkit-print-color-adjust: exact !important;
+              print-color-adjust: exact !important;
             }
           }
         </style>
@@ -84,7 +88,10 @@ const Navbar = ({ title, onTitleChange }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ html: cleanHtml }),
+        body: JSON.stringify({ 
+          html: cleanHtml,
+          margin: { top: '0px', bottom: '0px', left: '0px', right: '0px' }
+        }),
       });
 
       if (!response.ok) {
