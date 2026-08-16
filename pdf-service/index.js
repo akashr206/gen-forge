@@ -1,15 +1,31 @@
 const express = require('express');
 const puppeteer = require('puppeteer');
 const cors = require('cors');
+const rateLimit = require('express-rate-limit');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-app.use(cors());
+app.set('trust proxy', 1);
+
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'Accept']
+}));
+app.options('*', cors());
 
 app.use(express.json({ limit: '50mb' }));
 
-app.post('/api/generate-pdf', async (req, res) => {
+const exportLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 20,
+  message: { error: 'Too many PDF export requests from this IP, please try again after a minute' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+app.post('/api/generate-pdf', exportLimiter, async (req, res) => {
   const { html } = req.body;
 
   if (!html) {
