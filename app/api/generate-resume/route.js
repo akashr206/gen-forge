@@ -34,6 +34,7 @@ STRICT INSTRUCTIONS & STANDARDS:
    - CRITICAL MARKDOWN RULE: The 'content' field MUST use standard Markdown unordered lists. You MUST use a hyphen and a space ('- ') for each bullet point.
    - DO NOT use hardcoded unicode bullets (•, ◦, ▪).
    - Start every bullet point with a strong action verb (e.g., "Architected", "Engineered", "Spearheaded").
+   - STRUCTURE BULLETS USING THE X-Y-Z FORMULA: "Accomplished [X], as measured by [Y], by doing [Z]". Always frame achievements to highlight the measurable business impact.
    - Quantify achievements with metrics, percentages, and data wherever possible.
    - BOLD key metrics, important technologies, and core achievements within each bullet point using markdown (e.g., "**40% latency reduction**" or "**React.js**").
    - Separate each bullet point with a newline character (\\n).

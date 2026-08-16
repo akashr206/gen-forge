@@ -16,18 +16,55 @@ import {
     GripVertical,
     ChevronUp,
     ChevronDown,
+    FileText,
+    Wrench,
+    Trophy,
+    Globe,
+    Heart,
+    BookOpen,
+    Users,
+    LayoutList
 } from "lucide-react";
 
 const getSectionIcon = (section) => {
-    if (!section || !section.heading) return <Briefcase className="w-4 h-4" />;
+    if (!section || !section.heading) return <LayoutList className="w-4 h-4" />;
+    
     const heading = section.heading.toLowerCase();
-    if (heading.includes("experience") || heading.includes("work"))
+    
+    if (heading.includes("summary") || heading.includes("profile") || heading.includes("objective") || heading.includes("about"))
+        return <FileText className="w-4 h-4" />;
+        
+    if (heading.includes("experience") || heading.includes("work") || heading.includes("employment") || heading.includes("history"))
         return <Briefcase className="w-4 h-4" />;
-    if (heading.includes("education"))
+        
+    if (heading.includes("education") || heading.includes("academic") || heading.includes("degree"))
         return <GraduationCap className="w-4 h-4" />;
-    if (heading.includes("skill")) return <Award className="w-4 h-4" />;
-    if (heading.includes("project")) return <FolderGit2 className="w-4 h-4" />;
-    return <Briefcase className="w-4 h-4" />;
+        
+    if (heading.includes("skill") || heading.includes("technolog") || heading.includes("expertise") || heading.includes("competencies"))
+        return <Wrench className="w-4 h-4" />;
+        
+    if (heading.includes("project") || heading.includes("portfolio"))
+        return <FolderGit2 className="w-4 h-4" />;
+        
+    if (heading.includes("award") || heading.includes("certification") || heading.includes("achievement") || heading.includes("honor"))
+        return <Trophy className="w-4 h-4" />;
+        
+    if (heading.includes("language"))
+        return <Globe className="w-4 h-4" />;
+        
+    if (heading.includes("interest") || heading.includes("hobb"))
+        return <Heart className="w-4 h-4" />;
+        
+    if (heading.includes("volunteer") || heading.includes("community") || heading.includes("leadership"))
+        return <Users className="w-4 h-4" />;
+        
+    if (heading.includes("publication") || heading.includes("paper") || heading.includes("article"))
+        return <BookOpen className="w-4 h-4" />;
+        
+    // Fallback based on type
+    if (section.type === "text") return <FileText className="w-4 h-4" />;
+    
+    return <LayoutList className="w-4 h-4" />;
 };
 
 const ResumeEditor = ({ data, onChange }) => {

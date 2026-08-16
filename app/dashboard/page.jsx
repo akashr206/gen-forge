@@ -154,14 +154,7 @@ export default function DashboardPage() {
                 </p>
               </div>
 
-              <Link
-                href="/resume"
-                className="flex items-center gap-2 px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors"
-                onClick={() => setDropdownOpen(false)}
-              >
-                <FileText className="w-3.5 h-3.5 text-gray-500" />
-                Resume Editor
-              </Link>
+
 
               <button
                 onClick={() => signOut({ callbackUrl: "/" })}

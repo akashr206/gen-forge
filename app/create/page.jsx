@@ -8,19 +8,19 @@ import initialData from '@/data/sample-resume.json';
 
 import Navbar from '@/components/layout/Navbar';
 import { Button } from '@/components/ui/button';
-import { Sparkles, AlertCircle } from 'lucide-react';
+import { Sparkles, AlertCircle, BookOpen } from 'lucide-react';
 import CreateTabs from '@/components/create/CreateTabs';
 import ManualEntryForm from '@/components/create/ManualEntryForm';
 import ResumeExtractorTab from '@/components/create/ResumeExtractorTab';
 import JobDescriptionSection from '@/components/create/JobDescriptionSection';
+import ResumeGuideModal from '@/components/create/ResumeGuideModal';
 
 export default function CreateResumePage() {
   const router = useRouter();
 
-  // Tab State
   const [activeTab, setActiveTab] = useState('manual');
+  const [isGuideOpen, setIsGuideOpen] = useState(false);
 
-  // Manual Form State
   const [formData, setFormData] = useState({
     name: '',
     title: '',
@@ -35,16 +35,13 @@ export default function CreateResumePage() {
     customSections: [],
   });
 
-  // Extractor State
   const [pdfFile, setPdfFile] = useState(null);
   const [pdfText, setPdfText] = useState('');
   const [isUploading, setIsUploading] = useState(false);
   const [uploadSuccess, setUploadSuccess] = useState(false);
 
-  // Target Job Description State
   const [jd, setJd] = useState('');
 
-  // Generation & Streaming State
   const [isGenerating, setIsGenerating] = useState(false);
   const [generationProgress, setGenerationProgress] = useState(0);
   const [error, setError] = useState(null);
@@ -299,7 +296,6 @@ export default function CreateResumePage() {
     }
   };
 
-  // Streaming Live Preview screen
   if (isGenerating) {
     const livePreviewData = {
       ...initialData,
@@ -356,23 +352,31 @@ export default function CreateResumePage() {
       <Navbar />
 
       <main className="flex-1 max-w-3xl w-full mx-auto px-4 sm:px-6 py-8 sm:py-12">
-        {/* Page Header */}
-        <div className="mb-6">
-          <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-slate-900 dark:text-white">
-            Create Resume
-          </h1>
-          <p className="text-sm text-slate-500 mt-1">
-            Enter your details manually or extract from an existing resume.
-          </p>
+        <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-slate-900 dark:text-white">
+              Create Resume
+            </h1>
+            <p className="text-sm text-slate-500 mt-1">
+              Enter your details manually or extract from an existing resume.
+            </p>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setIsGuideOpen(true)}
+            className="self-start sm:self-auto inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-medium text-indigo-700 dark:text-indigo-300 bg-indigo-50/90 dark:bg-indigo-950/40 border border-indigo-200/80 dark:border-indigo-800/60 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 transition-all shadow-2xs cursor-pointer"
+          >
+            <BookOpen className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
+            <span>ATS & Data Entry Guide</span>
+          </button>
         </div>
 
-        {/* Full-width Tab Switcher */}
         <div className="mb-6">
           <CreateTabs activeTab={activeTab} onTabChange={setActiveTab} />
         </div>
 
         <div className="space-y-6">
-          {/* Active Tab Form Content */}
           {activeTab === 'manual' ? (
             <ManualEntryForm formData={formData} onFieldChange={handleFieldChange} />
           ) : (
@@ -390,10 +394,8 @@ export default function CreateResumePage() {
             />
           )}
 
-          {/* Target Job Description Section */}
           <JobDescriptionSection jd={jd} onJdChange={setJd} />
 
-          {/* Error Message */}
           {error && (
             <div className="p-3.5 rounded-lg bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 text-sm flex items-center gap-2.5">
               <AlertCircle className="w-4 h-4 shrink-0" />
@@ -401,7 +403,6 @@ export default function CreateResumePage() {
             </div>
           )}
 
-          {/* Submit Action */}
           <div className="flex items-center justify-between pt-4 pb-16">
             <span className="text-xs text-slate-400">
               * Required fields
@@ -418,6 +419,11 @@ export default function CreateResumePage() {
           </div>
         </div>
       </main>
+
+      <ResumeGuideModal
+        isOpen={isGuideOpen}
+        onClose={() => setIsGuideOpen(false)}
+      />
     </div>
   );
 }

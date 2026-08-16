@@ -15,7 +15,7 @@ const ResumePage = () => {
   const [resumeData, setResumeData] = useState(initialData);
   const [isLoading, setIsLoading] = useState(!!id);
   const [saveStatus, setSaveStatus] = useState('');
-  const [mobileTab, setMobileTab] = useState('editor'); // 'editor' | 'preview'
+  const [mobileTab, setMobileTab] = useState('editor');
   const lastSavedJson = React.useRef('');
 
   useEffect(() => {
@@ -57,7 +57,6 @@ const ResumePage = () => {
       design: editorData.design
     });
 
-    // If data hasn't changed from what is stored in database, do not trigger saving
     if (currentJson === lastSavedJson.current) {
       return;
     }
@@ -97,7 +96,6 @@ const ResumePage = () => {
         onTitleChange={(newTitle) => setEditorData(prev => ({ ...prev, title: newTitle }))}
       />
 
-      {/* Mobile Tab Switcher (Visible only on screens < lg) */}
       <div className="lg:hidden flex items-center justify-center p-2 bg-slate-100/90 border-b border-gray-200 shrink-0 print:hidden z-20">
         <div className="flex bg-white rounded p-1 border border-gray-200/80 shadow-2xs w-full max-w-xs">
           <button
@@ -147,14 +145,12 @@ const ResumePage = () => {
             </div>
           )}
           
-          {/* Editor Pane (Full width on mobile when selected, fixed 480-500px on desktop) */}
           <div className={`w-full lg:w-115 xl:w-125 shrink-0 h-full border-r border-[#E2E8F0] bg-white/70 backdrop-blur-md flex flex-col z-10 print:hidden! ${
             mobileTab === 'editor' ? 'flex' : 'hidden lg:flex'
           }`}>
             <ResumeEditor data={editorData} onChange={setEditorData} />
           </div>
 
-          {/* Viewer Pane (Full width on mobile when selected, flex-1 on desktop) */}
           <div className={`flex-1 h-full relative print:block! print:h-auto! print:w-auto! print:overflow-visible! ${
             mobileTab === 'preview' ? 'block' : 'hidden lg:block'
           }`}>

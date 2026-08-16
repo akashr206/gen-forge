@@ -3,13 +3,13 @@
 import React from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
-import { CheckCircle2 } from "lucide-react";
+import { Sparkles } from "lucide-react";
 
 const PreviewShowcase = ({ onOpenAuth }) => {
   const { data: session } = useSession();
 
   return (
-    <section className="px-4 sm:px-6 max-w-6xl mx-auto mb-16 sm:mb-24">
+    <section className="px-4 sm:px-6 max-w-6xl mx-auto mb-16 sm:mb-24 relative z-20">
       <div className="relative rounded-2xl p-1.5 sm:p-2 bg-gradient-to-b from-indigo-100/60 to-white/40 shadow-2xl border border-white/80 backdrop-blur-xl">
         <div className="h-10 px-3 sm:px-4 bg-white/70 backdrop-blur-md rounded-t-xl border-b border-gray-200/50 flex items-center justify-between">
           <div className="flex items-center gap-1.5 sm:gap-2">
@@ -17,13 +17,13 @@ const PreviewShowcase = ({ onOpenAuth }) => {
             <div className="w-2.5 sm:w-3 h-2.5 sm:h-3 rounded-full bg-amber-400/80" />
             <div className="w-2.5 sm:w-3 h-2.5 sm:h-3 rounded-full bg-emerald-400/80" />
             <span className="ml-2 sm:ml-3 text-xs font-mono text-gray-500 hidden sm:inline truncate max-w-[200px]">
-              workspace/john_doe_resume.json
+              workspace/john_doe_resume.pdf
             </span>
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3">
-            <span className="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-mono text-emerald-600 bg-emerald-50 px-1.5 sm:px-2 py-0.5 rounded">
-              <CheckCircle2 className="w-3 h-3" /> Page-Break In Sync
+            <span className="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-mono text-indigo-600 bg-indigo-50 px-1.5 sm:px-2 py-0.5 rounded border border-indigo-100/50">
+              <Sparkles className="w-3 h-3" /> AI-Optimized Layout
             </span>
             {session?.user ? (
               <Link
@@ -44,14 +44,15 @@ const PreviewShowcase = ({ onOpenAuth }) => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 bg-gray-50/50 rounded-b-xl overflow-hidden min-h-[460px]">
+          {/* Left Pane: Data Input */}
           <div className="lg:col-span-5 p-4 sm:p-6 border-b lg:border-b-0 lg:border-r border-gray-200/60 bg-white/60 flex flex-col justify-between">
             <div className="space-y-4">
               <div className="flex items-center justify-between pb-3 border-b border-gray-200/60">
                 <span className="text-xs font-mono font-bold tracking-wider text-gray-700 uppercase">
-                  Structure & Content
+                  Content Engine
                 </span>
                 <span className="text-[11px] font-mono text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded">
-                  Live JSON Model
+                  Live Preview
                 </span>
               </div>
 
@@ -76,7 +77,7 @@ const PreviewShowcase = ({ onOpenAuth }) => {
 
                 <div>
                   <label className="text-[10px] font-mono uppercase tracking-wider text-gray-400 block mb-1">
-                    Experience Entry (Markdown)
+                    Experience Entry
                   </label>
                   <div className="p-2.5 bg-white border border-gray-200 rounded text-xs text-gray-600 font-mono leading-relaxed space-y-1">
                     <p className="text-gray-900 font-semibold">Senior Software Engineer — Tech Innovations</p>
@@ -88,13 +89,16 @@ const PreviewShowcase = ({ onOpenAuth }) => {
             </div>
 
             <div className="mt-4 pt-4 border-t border-gray-200/60 flex items-center justify-between text-xs text-gray-500 font-mono">
-              <span>Auto-calculating A4 coordinates</span>
-              <span className="text-indigo-600 font-semibold">Page 1 of 1 (100% Fit)</span>
+              <span>Pixel-Perfect Formatting</span>
+              <span className="text-indigo-600 font-semibold">Ready to Export</span>
             </div>
           </div>
 
+          {/* Right Pane: A4 Preview */}
           <div className="lg:col-span-7 p-4 sm:p-8 flex items-center justify-center bg-slate-100/60 overflow-hidden relative">
-            <div className="w-full max-w-[420px] bg-white shadow-xl rounded-sm p-6 sm:p-8 border border-gray-200/80 font-serif transform hover:scale-[1.01] transition-transform duration-300">
+            <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.03] mix-blend-multiply pointer-events-none" />
+            
+            <div className="w-full max-w-[420px] aspect-[210/297] bg-white shadow-xl rounded-sm p-6 sm:p-8 border border-gray-200/80 font-serif transform hover:scale-[1.01] hover:shadow-indigo-500/10 transition-all duration-300 relative z-10">
               <div className="text-center pb-4 border-b border-gray-200 mb-4">
                 <h2 className="text-xl font-bold text-gray-900 tracking-tight">John Doe</h2>
                 <p className="text-xs text-gray-600 font-sans mt-0.5">Senior Full Stack Engineer</p>
