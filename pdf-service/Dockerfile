@@ -14,6 +14,8 @@ RUN chown -R pptruser:pptruser /usr/src/app
 
 USER pptruser
 
+RUN npx puppeteer browsers install chrome
+
 EXPOSE 3001
 
 CMD ["npm", "start"]
