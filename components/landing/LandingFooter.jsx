@@ -1,5 +1,4 @@
 import React from "react";
-import Link from "next/link";
 
 const LandingFooter = () => {
   return (
@@ -14,28 +13,10 @@ const LandingFooter = () => {
           </span>
         </div>
 
-        <div className="flex flex-wrap gap-4 sm:gap-6 items-center justify-center text-xs font-mono uppercase text-gray-500">
-          <Link href="/resume" className="hover:text-indigo-600 transition-colors">
-            Resume Studio
-          </Link>
-          <a href="#features" className="hover:text-indigo-600 transition-colors">
-            Features
-          </a>
-          <a href="#workflow" className="hover:text-indigo-600 transition-colors">
-            Workflow
-          </a>
-          <a
-            href="https://github.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-indigo-600 transition-colors"
-          >
-            GitHub
-          </a>
-        </div>
+
 
         <div className="text-[11px] font-mono text-gray-400">
-          © {new Date().getFullYear()} GenX. Precision in Typography.
+          © {new Date().getFullYear()} GenX Studio.
         </div>
       </div>
     </footer>
