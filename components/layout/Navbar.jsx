@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Download, LogOut, User as UserIcon } from 'lucide-react';
+import { Download, LogOut, User as UserIcon, LayoutDashboard } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useSession, signOut } from 'next-auth/react';
@@ -27,24 +27,24 @@ const Navbar = ({ title, onTitleChange }) => {
   }, []);
 
   return (
-    <nav className="h-16 shrink-0 w-full bg-white border-b border-gray-200 px-6 flex items-center justify-between z-20 print:hidden">
-      <div className="flex items-center gap-4 flex-1">
+    <nav className="h-16 shrink-0 w-full bg-white border-b border-gray-200 px-3 sm:px-6 flex items-center justify-between z-20 print:hidden gap-1.5 sm:gap-3">
+      <div className="flex items-center gap-1.5 sm:gap-3 flex-1 min-w-0">
         <Link href={session ? "/dashboard" : "/"} className="flex items-center gap-2 group shrink-0">
           <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-bold text-lg group-hover:scale-105 transition-transform duration-200 shadow-xs">
             G
           </div>
-          <span className="font-bold text-xl tracking-tight text-gray-900 font-ui">GenX</span>
+          <span className="font-bold text-lg sm:text-xl tracking-tight text-gray-900 font-ui hidden xs:inline">GenX</span>
         </Link>
 
         {pathname === '/resume' && title !== undefined && (
           <>
-            <div className="h-5 w-px bg-gray-300 shrink-0"></div>
-            <div className="relative w-full max-w-sm group/title">
+            <div className="h-5 w-px bg-gray-200 shrink-0"></div>
+            <div className="relative flex-1 min-w-0 max-w-[100px] xs:max-w-[160px] sm:max-w-xs md:max-w-sm group/title">
               <input
                 type="text"
                 value={title}
                 onChange={(e) => onTitleChange?.(e.target.value)}
-                className="w-full font-ui text-base font-medium text-gray-600 bg-transparent border border-transparent hover:border-gray-200 hover:bg-gray-50 focus:bg-white focus:border-indigo-300 focus:ring-2 focus:ring-indigo-100 rounded-md px-3 py-1 transition-all outline-hidden truncate"
+                className="w-full font-ui text-xs sm:text-sm md:text-base font-medium text-gray-700 bg-transparent border border-transparent hover:border-gray-200 hover:bg-gray-50 focus:bg-white focus:border-indigo-300 focus:ring-2 focus:ring-indigo-100 rounded px-1.5 sm:px-3 py-1 transition-all outline-hidden truncate"
                 placeholder="Untitled Resume"
                 title="Rename Resume"
               />
@@ -53,21 +53,33 @@ const Navbar = ({ title, onTitleChange }) => {
         )}
       </div>
 
-      <div className="flex items-center gap-3 shrink-0">
+      <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
+        {session && pathname !== '/dashboard' && (
+          <Link 
+            href="/dashboard"
+            className="flex items-center justify-center gap-1.5 p-2 sm:px-3 sm:py-1.5 text-xs sm:text-sm font-medium text-gray-700 bg-white border border-gray-200 hover:bg-gray-50 hover:border-gray-300 rounded shadow-2xs transition-all"
+            title="Go to Dashboard"
+          >
+            <LayoutDashboard className="w-3.5 h-3.5 text-gray-500" />
+            <span className="hidden sm:inline">Dashboard</span>
+          </Link>
+        )}
+
         {pathname === '/resume' && (
           <button 
             onClick={handleExport}
-            className="flex items-center gap-1.5 px-3.5 py-1.5 text-sm bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-md shadow-xs transition-colors"
+            className="flex items-center justify-center gap-1.5 p-2 sm:px-3.5 sm:py-1.5 text-xs sm:text-sm bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded shadow-xs transition-colors"
+            title="Export as PDF"
           >
             <Download className="w-3.5 h-3.5" />
-            Export PDF
+            <span className="hidden sm:inline">Export PDF</span>
           </button>
         )}
 
         <div className="relative" ref={dropdownRef}>
           <button 
             onClick={() => setDropdownOpen(!dropdownOpen)}
-            className="w-9 h-9 rounded-full border border-gray-200 flex items-center justify-center hover:ring-2 hover:ring-indigo-500/20 transition-all overflow-hidden focus:outline-hidden"
+            className="w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-gray-200 flex items-center justify-center hover:ring-2 hover:ring-indigo-500/20 transition-all overflow-hidden focus:outline-hidden"
           >
             {session?.user?.image ? (
               <img 

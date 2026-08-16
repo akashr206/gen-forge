@@ -275,18 +275,18 @@ ${projects}
 
         <Navbar />
 
-        <main className="flex-1 w-full flex flex-col items-center justify-center relative z-10 pt-4 pb-8 overflow-hidden">
-          <div className="flex flex-col items-center mb-6 text-slate-800 text-center space-y-2">
-            <Sparkles className="w-8 h-8 text-blue-600 animate-pulse mb-2" />
-            <h1 className="text-2xl font-light tracking-wide">Weaving Your Magic Resume</h1>
-            <p className="text-slate-500 text-sm">Please wait while the AI crafts your professional story in real-time...</p>
+        <main className="flex-1 w-full flex flex-col items-center justify-center relative z-10 pt-3 pb-6 sm:pt-4 sm:pb-8 overflow-hidden px-2 sm:px-4">
+          <div className="flex flex-col items-center mb-4 sm:mb-6 text-slate-800 text-center space-y-1 sm:space-y-2 px-4">
+            <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-blue-600 animate-pulse mb-1 sm:mb-2" />
+            <h1 className="text-xl sm:text-2xl font-light tracking-wide">Weaving Your Magic Resume</h1>
+            <p className="text-slate-500 text-xs sm:text-sm max-w-md">Please wait while the AI crafts your professional story in real-time...</p>
           </div>
 
           <div 
             ref={scrollRef}
-            className="relative flex-1 w-full flex justify-center overflow-y-auto overflow-x-hidden pt-4 pb-16"
+            className="relative flex-1 w-full flex justify-center overflow-y-auto overflow-x-hidden pt-2 sm:pt-4 pb-16"
           >
-            <div className="transform scale-[0.65] md:scale-[0.80] xl:scale-90 origin-top transition-all duration-500 ease-in-out">
+            <div className="transform scale-[0.42] xs:scale-[0.50] sm:scale-[0.65] md:scale-[0.80] xl:scale-90 origin-top transition-all duration-500 ease-in-out">
               <div className="shadow-2xl shadow-blue-500/10 ring-1 ring-black/5 bg-white pointer-events-none rounded-xl overflow-hidden">
                 <LiveResumePreview 
                   data={livePreviewData} 
@@ -304,10 +304,10 @@ ${projects}
     <div className="flex flex-col min-h-screen w-full bg-slate-50/50">
       <Navbar />
       
-      <main className="flex-1 max-w-4xl w-full mx-auto p-6 md:p-12">
-        <div className="mb-10 text-center md:text-left">
-          <h1 className="text-4xl font-light tracking-tight mb-3">Create Your Resume</h1>
-          <p className="text-lg text-slate-500 max-w-2xl">
+      <main className="flex-1 max-w-4xl w-full mx-auto p-4 sm:p-6 md:p-12">
+        <div className="mb-6 sm:mb-10 text-center md:text-left">
+          <h1 className="text-3xl sm:text-4xl font-light tracking-tight mb-2 sm:mb-3">Create Your Resume</h1>
+          <p className="text-sm sm:text-lg text-slate-500 max-w-2xl">
             Provide your details below, or upload an existing resume to get a head start. Our AI will perfectly format and tailor it to your target role.
           </p>
         </div>
@@ -409,8 +409,8 @@ ${projects}
             </div>
           )}
 
-          <div className="flex justify-end pt-4 pb-20">
-            <Button size="lg" className="px-8 h-12 rounded text-base font-medium shadow-lg hover:shadow-xl transition-all" onClick={handleBuild}>
+          <div className="flex justify-end pt-2 sm:pt-4 pb-16 sm:pb-20">
+            <Button size="lg" className="w-full sm:w-auto px-8 h-12 rounded text-base font-medium shadow-lg hover:shadow-xl transition-all" onClick={handleBuild}>
               <Sparkles className="w-5 h-5 mr-2" />
               Build Magic Resume
             </Button>

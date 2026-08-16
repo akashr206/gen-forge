@@ -12,8 +12,6 @@ export default function ResumeThumbnail({ resume }) {
     
     const observer = new ResizeObserver((entries) => {
       for (let entry of entries) {
-        // LiveResumePreview enforces w-[210mm] which translates to approx 793.7px
-        // We scale it down so it fits perfectly in the container.
         setScale(entry.contentRect.width / 793.7);
       }
     });
@@ -37,7 +35,6 @@ export default function ResumeThumbnail({ resume }) {
         <LiveResumePreview data={resume} />
       </div>
       
-      {/* Invisible overlay to block mouse interactions with the mini-resume */}
       <div className="absolute inset-0 z-10 pointer-events-none"></div>
     </div>
   );

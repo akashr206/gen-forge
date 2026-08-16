@@ -62,9 +62,28 @@ const ResumeViewer = ({ data, hideUI = false }) => {
   const [fontsReady, setFontsReady] = useState(false);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
 
-  const handleZoomIn = () => setZoom(prev => Math.min(prev + 0.1, 2.0));
-  const handleZoomOut = () => setZoom(prev => Math.max(prev - 0.1, 0.5));
-  const resetZoom = () => setZoom(1.0);
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const w = window.innerWidth;
+      if (w < 440) {
+        setZoom(0.42);
+      } else if (w < 640) {
+        setZoom(0.48);
+      } else if (w < 1024) {
+        setZoom(0.65);
+      }
+    }
+  }, []);
+
+  const handleZoomIn = () => setZoom(prev => Math.min(Number((prev + 0.1).toFixed(2)), 2.0));
+  const handleZoomOut = () => setZoom(prev => Math.max(Number((prev - 0.1).toFixed(2)), 0.3));
+  const resetZoom = () => {
+    if (typeof window !== 'undefined' && window.innerWidth < 640) {
+      setZoom(window.innerWidth < 440 ? 0.42 : 0.48);
+    } else {
+      setZoom(1.0);
+    }
+  };
 
   const headerFont = data?.design?.headerFont;
   const bodyFont = data?.design?.bodyFont;
@@ -180,55 +199,71 @@ const ResumeViewer = ({ data, hideUI = false }) => {
       </div>
 
       <div 
-        className={`flex flex-col items-center gap-8 print:p-0 print:gap-0 origin-top transition-transform duration-200 print-no-scale ${hideUI ? 'py-0 px-0' : 'py-12 px-8'}`}
-        style={{ transform: `scale(${zoom})` }}
+        className={`w-full flex-1 flex flex-col items-center print:block print:p-0 ${hideUI ? 'py-0 px-0' : 'py-6 sm:py-12'}`}
       >
-        {isInitialLoad ? (
-          <ResumeSkeleton />
-        ) : pages && pages.map((page, index) => (
+        <div 
+          style={{ 
+            width: isInitialLoad ? 'auto' : `${793.7 * zoom}px`,
+            height: isInitialLoad ? 'auto' : pages ? `${(1122.5 * pages.length + Math.max(0, pages.length - 1) * 32) * zoom}px` : 'auto',
+          }}
+          className="relative transition-all duration-150 print:w-auto print:h-auto"
+        >
           <div 
-            key={index}
-            className="w-[210mm] shrink-0 bg-white shadow-xl @container print:shadow-none print:w-[210mm] print:m-0 print:break-after-page print:break-inside-avoid relative overflow-hidden"
             style={{ 
-              height: '297mm',
-              ...cssVariables
+              transform: `scale(${zoom})`,
+              transformOrigin: 'top left',
+              width: '793.7px',
             }}
+            className="flex flex-col items-center gap-8 print:p-0 print:gap-0 print:transform-none origin-top-left transition-transform duration-150"
           >
-            <div style={{ marginTop: `-${page.shiftY}px` }} className="w-full relative">
-              <VisibilityContext.Provider value={page.visibleIds}>
-                <BaseTemplate data={data} />
-              </VisibilityContext.Provider>
-            </div>
+            {isInitialLoad ? (
+              <ResumeSkeleton />
+            ) : pages && pages.map((page, index) => (
+              <div 
+                key={index}
+                className="w-[210mm] shrink-0 bg-white shadow-xl @container print:shadow-none print:w-[210mm] print:m-0 print:break-after-page print:break-inside-avoid relative overflow-hidden"
+                style={{ 
+                  height: '297mm',
+                  ...cssVariables
+                }}
+              >
+                <div style={{ marginTop: `-${page.shiftY}px` }} className="w-full relative">
+                  <VisibilityContext.Provider value={page.visibleIds}>
+                    <BaseTemplate data={data} />
+                  </VisibilityContext.Provider>
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
 
       {!hideUI && (
-        <div className="fixed bottom-8 right-8 flex items-center gap-2 bg-white/90 backdrop-blur shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-gray-200/50 rounded-full p-1.5 z-50 print:hidden">
+        <div className="fixed bottom-4 right-4 sm:bottom-8 sm:right-8 flex items-center gap-1 sm:gap-2 bg-white/95 backdrop-blur shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-gray-200/60 rounded-full p-1 sm:p-1.5 z-40 print:hidden">
           <button  
-          onClick={handleZoomOut}
-          disabled={zoom <= 0.5}
-          className="p-2.5 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed rounded-full transition-colors text-gray-600 hover:text-gray-900"
-          title="Zoom Out"
-        >
-          <Minus className="w-4 h-4" />
-        </button>
-        <button 
-          onClick={resetZoom}
-          className="px-2 text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors w-12 text-center"
-          title="Reset Zoom"
-        >
-          {Math.round(zoom * 100)}%
-        </button>
-        <button 
-          onClick={handleZoomIn}
-          disabled={zoom >= 2.0}
-          className="p-2.5 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed rounded-full transition-colors text-gray-600 hover:text-gray-900"
-          title="Zoom In"
-        >
-          <Plus className="w-4 h-4" />
-        </button>
-      </div>
+            onClick={handleZoomOut}
+            disabled={zoom <= 0.3}
+            className="p-2 sm:p-2.5 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed rounded-full transition-colors text-gray-600 hover:text-gray-900"
+            title="Zoom Out"
+          >
+            <Minus className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+          </button>
+          <button 
+            onClick={resetZoom}
+            className="px-1.5 sm:px-2 text-xs sm:text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors w-10 sm:w-12 text-center"
+            title="Reset Zoom"
+          >
+            {Math.round(zoom * 100)}%
+          </button>
+          <button 
+            onClick={handleZoomIn}
+            disabled={zoom >= 2.0}
+            className="p-2 sm:p-2.5 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed rounded-full transition-colors text-gray-600 hover:text-gray-900"
+            title="Zoom In"
+          >
+            <Plus className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+          </button>
+        </div>
       )}
     </div>
   );

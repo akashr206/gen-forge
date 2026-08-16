@@ -34,27 +34,27 @@ const features = [
 
 const FeaturesSection = () => {
   return (
-    <section id="features" className="px-6 py-20 max-w-6xl mx-auto">
-      <div className="mb-14 text-center sm:text-left">
+    <section id="features" className="px-4 sm:px-6 py-12 sm:py-20 max-w-6xl mx-auto">
+      <div className="mb-8 sm:mb-14 text-center sm:text-left">
         <div className="inline-flex items-center gap-1.5 text-xs font-mono text-indigo-600 bg-indigo-50 border border-indigo-100 px-2.5 py-1 rounded-full mb-3 uppercase tracking-wider">
           Core Capabilities
         </div>
-        <h2 className="font-ui text-3xl sm:text-4xl text-gray-900 font-bold tracking-tight mb-3">
+        <h2 className="font-ui text-2xl sm:text-3xl md:text-4xl text-gray-900 font-bold tracking-tight mb-2 sm:mb-3">
           Engineered Excellence
         </h2>
-        <p className="font-ui text-base sm:text-lg text-gray-600 max-w-xl">
+        <p className="font-ui text-sm sm:text-base md:text-lg text-gray-600 max-w-xl">
           A system designed for speed and professional sophistication, removing
           friction from the resume creation process.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
         {features.map((f) => {
           const Icon = f.icon;
           return (
             <div
               key={f.num}
-              className="bg-white/70 backdrop-blur-md border border-white/80 p-8 rounded-2xl relative group overflow-hidden shadow-sm hover:shadow-xl hover:bg-white/90 transition-all duration-300 hover:-translate-y-1"
+              className="bg-white/70 backdrop-blur-md border border-white/80 p-6 sm:p-8 rounded-xl sm:rounded-2xl relative group overflow-hidden shadow-sm hover:shadow-xl hover:bg-white/90 transition-all duration-300 hover:-translate-y-1"
             >
               <div className="absolute top-4 right-6 font-mono text-5xl sm:text-6xl font-bold text-indigo-600/10 select-none group-hover:text-indigo-600/20 transition-colors duration-300">
                 {f.num}

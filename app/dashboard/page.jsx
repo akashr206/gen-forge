@@ -112,7 +112,7 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-[#fcfbf9] text-[#0b1c30] flex flex-col font-ui selection:bg-indigo-600 selection:text-white">
-      <nav className="fixed top-0 left-0 right-0 z-40 h-16 px-6 sm:px-12 bg-white/80 backdrop-blur-xl border-b border-slate-200/80 flex items-center justify-between shadow-2xs">
+      <nav className="fixed top-0 left-0 right-0 z-40 h-16 px-4 sm:px-8 md:px-12 bg-white/80 backdrop-blur-xl border-b border-slate-200/80 flex items-center justify-between shadow-2xs">
         <Link href="/" className="flex items-center gap-2.5 group">
           <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-bold text-lg group-hover:scale-105 transition-transform duration-200 shadow-xs">
             G
@@ -175,7 +175,7 @@ export default function DashboardPage() {
         </div>
       </nav>
 
-      <main className="flex-1 pt-24 pb-16 px-6 sm:px-12 max-w-7xl mx-auto w-full flex flex-col">
+      <main className="flex-1 pt-20 sm:pt-24 pb-12 sm:pb-16 px-4 sm:px-8 md:px-12 max-w-7xl mx-auto w-full flex flex-col">
         {loading ? (
           <div className="flex-1 flex flex-col items-center justify-center py-24 text-gray-400">
             <Loader2 className="w-8 h-8 animate-spin text-indigo-600 mb-3" />
@@ -185,25 +185,25 @@ export default function DashboardPage() {
           </div>
         ) : resumes.length === 0 ? (
           <div className="flex-1 flex items-center justify-center py-12">
-            <div className="w-full max-w-lg bg-white/80 backdrop-blur-xl border border-white/80 rounded-xl p-8 sm:p-12 shadow-2xl text-center flex flex-col items-center relative overflow-hidden group">
+            <div className="w-full max-w-lg bg-white/80 backdrop-blur-xl border border-white/80 rounded-xl p-6 sm:p-12 shadow-2xl text-center flex flex-col items-center relative overflow-hidden group">
               <div className="absolute -top-24 -right-24 w-48 h-48 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
               <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
 
-              <div className="w-20 h-20 rounded-xl bg-indigo-50 border border-indigo-100/80 flex items-center justify-center text-indigo-600 mb-6 shadow-sm group-hover:scale-105 transition-transform duration-300">
-                <FilePlus className="w-10 h-10" />
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-indigo-50 border border-indigo-100/80 flex items-center justify-center text-indigo-600 mb-5 sm:mb-6 shadow-sm group-hover:scale-105 transition-transform duration-300">
+                <FilePlus className="w-8 h-8 sm:w-10 sm:h-10" />
               </div>
 
-              <h2 className="font-ui text-3xl font-bold text-gray-900 tracking-tight mb-3">
+              <h2 className="font-ui text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight mb-2 sm:mb-3">
                 No Resumes Created Yet
               </h2>
-              <p className="font-ui text-base text-gray-600 mb-8 max-w-sm leading-relaxed">
+              <p className="font-ui text-sm sm:text-base text-gray-600 mb-6 sm:mb-8 max-w-sm leading-relaxed">
                 Welcome, <strong className="text-gray-900">{session?.user?.name || "Developer"}</strong>! Create your first ATS-optimized, beautifully styled resume to get started.
               </p>
 
               <button
                 onClick={handleCreateResume}
                 disabled={creating}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded bg-indigo-600 hover:bg-indigo-700 text-white font-mono text-xs uppercase tracking-wider font-semibold shadow-[0_4px_20px_rgba(79,70,229,0.35)] hover:shadow-[0_6px_25px_rgba(79,70,229,0.45)] hover:scale-[1.02] transition-all duration-200 active:scale-95 disabled:opacity-60"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 sm:px-8 py-3.5 sm:py-4 rounded bg-indigo-600 hover:bg-indigo-700 text-white font-mono text-xs uppercase tracking-wider font-semibold shadow-[0_4px_20px_rgba(79,70,229,0.35)] hover:shadow-[0_6px_25px_rgba(79,70,229,0.45)] hover:scale-[1.02] transition-all duration-200 active:scale-95 disabled:opacity-60"
               >
                 {creating ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
@@ -216,12 +216,12 @@ export default function DashboardPage() {
           </div>
         ) : (
           <>
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10 pb-6 border-b border-slate-200/80">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6 sm:mb-10 pb-4 sm:pb-6 border-b border-slate-200/80">
               <div>
-                <h1 className="font-ui text-4xl sm:text-5xl font-bold tracking-tight text-gray-900 mb-2">
+                <h1 className="font-ui text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-gray-900 mb-1 sm:mb-2">
                   Dashboard
                 </h1>
-                <p className="font-ui text-base text-gray-600">
+                <p className="font-ui text-sm sm:text-base text-gray-600">
                   Manage, edit, and export your professional resume documents.
                 </p>
               </div>
@@ -229,7 +229,7 @@ export default function DashboardPage() {
               <button
                 onClick={handleCreateResume}
                 disabled={creating || resumes.length >= 10}
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded bg-indigo-600 hover:bg-indigo-700 text-white font-mono text-xs uppercase tracking-wider font-semibold shadow-[0_4px_14px_0_rgba(79,70,229,0.35)] hover:shadow-[0_6px_20px_rgba(79,70,229,0.45)] transition-all duration-200 active:scale-95 group disabled:opacity-60"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded bg-indigo-600 hover:bg-indigo-700 text-white font-mono text-xs uppercase tracking-wider font-semibold shadow-[0_4px_14px_0_rgba(79,70,229,0.35)] hover:shadow-[0_6px_20px_rgba(79,70,229,0.45)] transition-all duration-200 active:scale-95 group disabled:opacity-60"
               >
                 {creating ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
@@ -240,24 +240,24 @@ export default function DashboardPage() {
               </button>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
-              <h2 className="font-ui text-xl font-bold text-gray-900">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 mb-6 sm:mb-8">
+              <h2 className="font-ui text-lg sm:text-xl font-bold text-gray-900">
                 Your Resumes ({filteredResumes.length})
               </h2>
 
-              <div className="relative w-full sm:w-64">
+              <div className="relative w-full sm:w-72">
                 <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Filter resumes..."
+                  placeholder="Search resumes..."
                   className="w-full pl-10 pr-4 py-2 bg-white border border-gray-200 rounded font-ui text-sm text-gray-800 placeholder:text-gray-400 focus:outline-hidden focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all shadow-2xs"
                 />
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
               {filteredResumes.map((resume) => {
                 const targetId = resume._id || resume.id;
                 const isDeleting = deletingId === targetId;
@@ -265,9 +265,9 @@ export default function DashboardPage() {
                 return (
                   <div
                     key={targetId}
-                    className="bg-white rounded-xl border border-slate-200/80 p-5 flex flex-col hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group relative"
+                    className="bg-white rounded-xl border border-slate-200/80 p-4 sm:p-5 flex flex-col hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group relative"
                   >
-                    <div className="aspect-[1/1.414] w-full bg-slate-100/70 mb-5 rounded-lg overflow-hidden border border-slate-200/60 relative group-hover:border-indigo-200 transition-colors">
+                    <div className="aspect-[1/1.414] w-full bg-slate-100/70 mb-4 sm:mb-5 rounded-lg overflow-hidden border border-slate-200/60 relative group-hover:border-indigo-200 transition-colors">
                       <ResumeThumbnail resume={resume} />
                       
                       <div className="absolute inset-0 bg-slate-900/10 opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-[2px] flex items-center justify-center gap-3">
@@ -277,13 +277,6 @@ export default function DashboardPage() {
                           title="Edit Resume"
                         >
                           <Edit3 className="w-4 h-4" />
-                        </Link>
-                        <Link
-                          href={`/resume?id=${targetId}`}
-                          className="p-3 bg-white text-gray-700 rounded shadow-lg hover:bg-gray-900 hover:text-white transition-colors duration-200 transform hover:scale-110"
-                          title="Preview & Export"
-                        >
-                          <Download className="w-4 h-4" />
                         </Link>
                         <button
                           onClick={(e) => openDeleteDialog(targetId, resume.title, e)}
@@ -303,7 +296,7 @@ export default function DashboardPage() {
                     <div className="flex-1 flex flex-col justify-between">
                       <div>
                         <div className="flex items-center justify-between gap-2 mb-1">
-                          <h3 className="font-ui text-lg font-bold text-gray-900 truncate">
+                          <h3 className="font-ui text-base sm:text-lg font-bold text-gray-900 truncate">
                             {resume.title || resume.basics?.name || "Untitled Resume"}
                           </h3>
                         </div>
@@ -312,10 +305,10 @@ export default function DashboardPage() {
                         </p>
                       </div>
 
-                      <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                      <div className="mt-3 sm:mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
                         <Link
                           href={`/resume?id=${targetId}`}
-                          className="text-xs font-mono text-indigo-600 hover:text-indigo-700 font-semibold inline-flex items-center gap-1"
+                          className="text-xs font-mono text-indigo-600 hover:text-indigo-700 font-semibold inline-flex items-center gap-1 py-1"
                         >
                           Open Studio →
                         </Link>
@@ -323,7 +316,7 @@ export default function DashboardPage() {
                         <button
                           onClick={(e) => openDeleteDialog(targetId, resume.title, e)}
                           disabled={isDeleting}
-                          className="text-xs font-mono text-gray-400 hover:text-red-600 transition-colors inline-flex items-center gap-1"
+                          className="text-xs font-mono text-gray-400 hover:text-red-600 transition-colors inline-flex items-center gap-1 p-1"
                           title="Delete Resume"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
@@ -337,12 +330,12 @@ export default function DashboardPage() {
               <button
                 onClick={handleCreateResume}
                 disabled={creating || resumes.length >= 10}
-                className="bg-white/50 rounded-xl border-2 border-dashed border-slate-300 p-8 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-white hover:border-indigo-400 transition-all duration-300 min-h-[340px] group shadow-2xs text-left disabled:opacity-60 disabled:cursor-not-allowed"
+                className="bg-white/50 rounded-xl border-2 border-dashed border-slate-300 p-6 sm:p-8 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-white hover:border-indigo-400 transition-all duration-300 min-h-[260px] sm:min-h-[340px] group shadow-2xs text-left disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                <div className="w-14 h-14 rounded-lg bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 mb-4 group-hover:scale-110 transition-transform duration-200">
-                  <Plus className="w-6 h-6" />
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-lg bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-200">
+                  <Plus className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
-                <h3 className="font-ui text-lg font-bold text-gray-900 mb-1">
+                <h3 className="font-ui text-base sm:text-lg font-bold text-gray-900 mb-1">
                   {resumes.length >= 10 ? "Limit Reached" : "Start from Scratch"}
                 </h3>
                 <p className="font-ui text-xs text-gray-500 max-w-xs">

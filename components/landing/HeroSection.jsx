@@ -9,9 +9,9 @@ const HeroSection = ({ onOpenAuth }) => {
   const { data: session } = useSession();
 
   return (
-    <section className="min-h-[75vh] flex flex-col justify-center items-center px-6 text-center pt-28 pb-16 relative">
+    <section className="min-h-[70vh] sm:min-h-[75vh] flex flex-col justify-center items-center px-4 sm:px-6 text-center pt-24 sm:pt-28 pb-12 sm:pb-16 relative">
 
-      <h1 className="font-ui text-5xl sm:text-6xl md:text-7xl lg:text-[84px] leading-[1.05] tracking-tight text-gray-900 max-w-4xl mx-auto mb-6 font-bold">
+      <h1 className="font-ui text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-[84px] leading-[1.08] sm:leading-[1.05] tracking-tight text-gray-900 max-w-4xl mx-auto mb-4 sm:mb-6 font-bold">
         Your Career,
         <br />
         <span className="bg-gradient-to-r from-indigo-700 via-indigo-600 to-indigo-800 bg-clip-text text-transparent">
@@ -19,28 +19,28 @@ const HeroSection = ({ onOpenAuth }) => {
         </span>
       </h1>
 
-      <p className="font-ui text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed">
+      <p className="font-ui text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed px-2">
         Experience invisible efficiency. GenX structures your professional
         narrative with uncompromising technical precision, delivering a
         flawless resume without the cognitive load.
       </p>
 
-      <div className="flex flex-col sm:flex-row items-center gap-4">
+      <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto px-4 sm:px-0">
         {session?.user ? (
           <Link
             href="/dashboard"
-            className="inline-flex items-center gap-2.5 px-8 py-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-mono text-sm uppercase tracking-wider font-semibold transition-all duration-300 shadow-[0_0_30px_rgba(79,70,229,0.25)] hover:shadow-[0_0_40px_rgba(79,70,229,0.35)] hover:scale-[1.02] group"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 sm:px-8 py-3.5 sm:py-4 rounded bg-indigo-600 hover:bg-indigo-700 text-white font-mono text-xs sm:text-sm uppercase tracking-wider font-semibold transition-all duration-300 shadow-[0_0_30px_rgba(79,70,229,0.25)] hover:shadow-[0_0_40px_rgba(79,70,229,0.35)] hover:scale-[1.02] group"
           >
             <LayoutDashboard className="w-4 h-4" />
-            OPEN DASHBOARD
+            <span>OPEN DASHBOARD</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
           </Link>
         ) : (
           <button
             onClick={onOpenAuth}
-            className="inline-flex items-center gap-2.5 px-8 py-4 rounded-xl bg-white/80 backdrop-blur-md border border-indigo-200/80 text-indigo-700 font-mono text-sm uppercase tracking-wider font-semibold hover:bg-white transition-all duration-300 shadow-[0_0_30px_rgba(79,70,229,0.15)] hover:shadow-[0_0_40px_rgba(79,70,229,0.25)] hover:scale-[1.02] group"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 sm:px-8 py-3.5 sm:py-4 rounded bg-white/80 backdrop-blur-md border border-indigo-200/80 text-indigo-700 font-mono text-xs sm:text-sm uppercase tracking-wider font-semibold hover:bg-white transition-all duration-300 shadow-[0_0_30px_rgba(79,70,229,0.15)] hover:shadow-[0_0_40px_rgba(79,70,229,0.25)] hover:scale-[1.02] group"
           >
-            START BUILDING
+            <span>START BUILDING</span>
             <ArrowRight className="w-4 h-4 text-indigo-600 group-hover:translate-x-1 transition-transform duration-200" />
           </button>
         )}

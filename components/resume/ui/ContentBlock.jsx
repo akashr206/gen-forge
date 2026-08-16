@@ -4,7 +4,6 @@ import ReactMarkdown from "react-markdown";
 const ContentBlock = ({ content }) => {
     if (!content || typeof content !== "string") return null;
 
-    // Convert single newlines to markdown hard-breaks (two spaces + newline)
     const formattedContent = content.replace(/\n/g, '  \n');
 
     return (
@@ -28,9 +27,9 @@ const ContentBlock = ({ content }) => {
                         />
                     ),
                     li: ({ node, ...props }) => (
-                        <li className="flex items-start gap-[length:calc(var(--resume-item-gap)*2)]">
-                            <div className="w-[length:calc(var(--resume-body-size)*0.45)] h-[length:calc(var(--resume-body-size)*0.45)] rounded-full bg-gray-700 mt-[length:calc(var(--resume-body-size)*0.55)] shrink-0"></div>
-                            <span>{props.children}</span>
+                        <li className="flex items-start gap-[1.4cqw]">
+                            <div className="w-[0.65cqw] h-[0.65cqw] aspect-square rounded-full bg-gray-700 mt-[0.62em] shrink-0"></div>
+                            <div className="flex-1 min-w-0">{props.children}</div>
                         </li>
                     ),
                     a: ({ node, ...props }) => (

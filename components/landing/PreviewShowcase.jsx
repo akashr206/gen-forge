@@ -9,20 +9,20 @@ const PreviewShowcase = ({ onOpenAuth }) => {
   const { data: session } = useSession();
 
   return (
-    <section className="px-6 max-w-6xl mx-auto mb-24">
-      <div className="relative rounded-2xl p-2 bg-gradient-to-b from-indigo-100/60 to-white/40 shadow-2xl border border-white/80 backdrop-blur-xl">
-        <div className="h-10 px-4 bg-white/70 backdrop-blur-md rounded-t-xl border-b border-gray-200/50 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-red-400/80" />
-            <div className="w-3 h-3 rounded-full bg-amber-400/80" />
-            <div className="w-3 h-3 rounded-full bg-emerald-400/80" />
-            <span className="ml-3 text-xs font-mono text-gray-500">
+    <section className="px-4 sm:px-6 max-w-6xl mx-auto mb-16 sm:mb-24">
+      <div className="relative rounded-2xl p-1.5 sm:p-2 bg-gradient-to-b from-indigo-100/60 to-white/40 shadow-2xl border border-white/80 backdrop-blur-xl">
+        <div className="h-10 px-3 sm:px-4 bg-white/70 backdrop-blur-md rounded-t-xl border-b border-gray-200/50 flex items-center justify-between">
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <div className="w-2.5 sm:w-3 h-2.5 sm:h-3 rounded-full bg-red-400/80" />
+            <div className="w-2.5 sm:w-3 h-2.5 sm:h-3 rounded-full bg-amber-400/80" />
+            <div className="w-2.5 sm:w-3 h-2.5 sm:h-3 rounded-full bg-emerald-400/80" />
+            <span className="ml-2 sm:ml-3 text-xs font-mono text-gray-500 hidden sm:inline truncate max-w-[200px]">
               workspace/john_doe_resume.json
             </span>
           </div>
 
-          <div className="flex items-center gap-3">
-            <span className="inline-flex items-center gap-1 text-[11px] font-mono text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <span className="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-mono text-emerald-600 bg-emerald-50 px-1.5 sm:px-2 py-0.5 rounded">
               <CheckCircle2 className="w-3 h-3" /> Page-Break In Sync
             </span>
             {session?.user ? (
@@ -44,7 +44,7 @@ const PreviewShowcase = ({ onOpenAuth }) => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 bg-gray-50/50 rounded-b-xl overflow-hidden min-h-[460px]">
-          <div className="lg:col-span-5 p-6 border-r border-gray-200/60 bg-white/60 flex flex-col justify-between">
+          <div className="lg:col-span-5 p-4 sm:p-6 border-b lg:border-b-0 lg:border-r border-gray-200/60 bg-white/60 flex flex-col justify-between">
             <div className="space-y-4">
               <div className="flex items-center justify-between pb-3 border-b border-gray-200/60">
                 <span className="text-xs font-mono font-bold tracking-wider text-gray-700 uppercase">
@@ -93,7 +93,7 @@ const PreviewShowcase = ({ onOpenAuth }) => {
             </div>
           </div>
 
-          <div className="lg:col-span-7 p-6 sm:p-8 flex items-center justify-center bg-slate-100/60 overflow-hidden relative">
+          <div className="lg:col-span-7 p-4 sm:p-8 flex items-center justify-center bg-slate-100/60 overflow-hidden relative">
             <div className="w-full max-w-[420px] bg-white shadow-xl rounded-sm p-6 sm:p-8 border border-gray-200/80 font-serif transform hover:scale-[1.01] transition-transform duration-300">
               <div className="text-center pb-4 border-b border-gray-200 mb-4">
                 <h2 className="text-xl font-bold text-gray-900 tracking-tight">John Doe</h2>

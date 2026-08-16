@@ -67,21 +67,21 @@ const ResumeEditor = ({ data, onChange }) => {
     const activeSection = data.sections[activeSectionIndex];
 
     return (
-        <div className="flex flex-col flex-1 min-h-0 w-full pt-10">
-            <div className="px-6 mb-4 shrink-0">
-                <h2 className="text-2xl font-bold tracking-tight text-gray-900">
+        <div className="flex flex-col flex-1 min-h-0 w-full pt-4 sm:pt-8">
+            <div className="px-4 sm:px-6 mb-3 sm:mb-4 shrink-0">
+                <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900">
                     Resume Data
                 </h2>
-                <p className="text-sm text-gray-500 mt-1">
+                <p className="text-xs sm:text-sm text-gray-500 mt-0.5 sm:mt-1">
                     Edit your resume details below. Changes reflect instantly.
                 </p>
             </div>
-            <div className="w-full overflow-y-scroll min-h-0 flex-1">
+            <div className="w-full overflow-y-auto min-h-0 flex-1">
                 <div className="flex flex-col min-h-max bg-transparent pb-16">
-                    <div className="flex flex-col pt-4">
+                    <div className="flex flex-col pt-2 sm:pt-4">
                         <button
                             onClick={() => setActiveSectionId("basics")}
-                            className={`flex items-center gap-4 px-6 py-4 text-sm font-medium transition-colors border-l-2
+                            className={`flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-3 sm:py-4 text-sm font-medium transition-colors border-l-2
               ${
                   activeSectionId === "basics"
                       ? "border-primary text-primary bg-primary/5"
@@ -92,12 +92,12 @@ const ResumeEditor = ({ data, onChange }) => {
                             Personal Info
                         </button>
 
-                        <div className="mx-6 my-2 h-px bg-gray-100" />
-                        <div className="px-6 py-2 text-xs font-label uppercase tracking-widest text-gray-400">Settings</div>
+                        <div className="mx-4 sm:mx-6 my-2 h-px bg-gray-100" />
+                        <div className="px-4 sm:px-6 py-1.5 text-xs font-label uppercase tracking-widest text-gray-400">Settings</div>
 
                         <button
                             onClick={() => setActiveSectionId("design")}
-                            className={`flex items-center gap-4 px-6 py-4 text-sm font-medium transition-colors border-l-2
+                            className={`flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-3 sm:py-4 text-sm font-medium transition-colors border-l-2
               ${
                   activeSectionId === "design"
                       ? "border-primary text-primary bg-primary/5"
@@ -108,8 +108,8 @@ const ResumeEditor = ({ data, onChange }) => {
                             Design
                         </button>
 
-                        <div className="mx-6 my-2 h-px bg-gray-100" />
-                        <div className="px-6 py-2 text-xs font-label uppercase tracking-widest text-gray-400">Sections</div>
+                        <div className="mx-4 sm:mx-6 my-2 h-px bg-gray-100" />
+                        <div className="px-4 sm:px-6 py-1.5 text-xs font-label uppercase tracking-widest text-gray-400">Sections</div>
 
                         {data.sections.map((section) => {
                             const id = section.id || section.heading;
@@ -118,7 +118,7 @@ const ResumeEditor = ({ data, onChange }) => {
                                 <button
                                     key={id}
                                     onClick={() => setActiveSectionId(id)}
-                                    className={`flex items-center gap-4 px-6 py-4 text-sm font-medium transition-colors border-l-2
+                                    className={`flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-3 sm:py-4 text-sm font-medium transition-colors border-l-2
                   ${
                       isActive
                           ? "border-primary text-primary bg-primary/5"
@@ -126,12 +126,12 @@ const ResumeEditor = ({ data, onChange }) => {
                   }`}
                                 >
                                     {getSectionIcon(section)}
-                                    {section.heading || "Untitled Section"}
+                                    <span className="truncate">{section.heading || "Untitled Section"}</span>
                                 </button>
                             );
                         })}
 
-                        <div className="px-6 py-8 border-b border-gray-100 flex justify-center">
+                        <div className="px-4 sm:px-6 py-4 sm:py-6 border-b border-gray-100 flex justify-center">
                             <button
                                 onClick={addSection}
                                 className="flex items-center gap-2 text-[11px] font-label uppercase tracking-[0.05em] text-gray-400 hover:text-gray-700 transition-colors"
@@ -141,10 +141,10 @@ const ResumeEditor = ({ data, onChange }) => {
                         </div>
                     </div>
 
-                    <div className="px-8 pt-10">
+                    <div className="px-4 sm:px-8 pt-6 sm:pt-8">
                         {activeSectionId === "basics" ? (
                             <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
-                                <h3 className="text-lg font-semibold text-gray-800 mb-6">
+                                <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-4 sm:mb-6">
                                     Basic Details
                                 </h3>
                                 <BasicsEditor
