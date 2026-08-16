@@ -7,7 +7,7 @@ const ContentBlock = ({ content }) => {
     const formattedContent = content.replace(/\n/g, '  \n');
 
     return (
-        <div className="flex flex-col gap-[length:calc(var(--resume-item-gap)*0.5)] text-[length:var(--resume-body-size)] text-gray-700 leading-relaxed break-inside-avoid text-justify ">
+        <div className="flex flex-col gap-[length:calc(var(--resume-item-gap)*0.5)] text-[length:var(--resume-body-size)] text-gray-700 leading-relaxed break-inside-avoid text-justify hyphens-auto">
             <ReactMarkdown
                 components={{
                     p: ({ node, ...props }) => <p {...props} />,

@@ -2,7 +2,7 @@ import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 
 export const metadata = {
-  title: "Dashboard — GenX Resumes",
+  title: "Dashboard | GenX Resumes",
   description: "Manage your resumes",
 };
 

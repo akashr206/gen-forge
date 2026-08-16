@@ -13,24 +13,48 @@ export async function POST(req) {
       );
     }
 
-    let prompt = `You are an expert technical resume writer. Your task is to generate a highly professional, beautifully structured resume in JSON format.
+    let prompt = `You are an elite executive resume writer and ATS (Applicant Tracking System) optimization expert. Your task is to generate a highly professional, structurally flawless resume in JSON format.
     
 Here are the raw details provided by the user:
 ${details ? `User Notes: ${details}\n` : ''}
 ${pdfText ? `Extracted Text from Existing Resume:\n${pdfText}\n` : ''}
 ${jd ? `Target Job Description (Tailor the resume to this):\n${jd}\n` : ''}
 
-Instructions:
-1. Extract and format the personal information (name, title, email, phone, location, links). Links should have 'label' and 'url'.
-2. Create a compelling "Professional Summary" (text section, id: "summary").
-3. Create an "Experience" section (timeline section, id: "experience"). Focus on achievements and metrics. Use markdown bullet points in the content. Timeline items have: primary, secondary, date, location, content.
-4. Create an "Education" section (timeline section, id: "education").
-5. Create a "Technical Skills" section (text section, id: "skills"). Format categories in bold (e.g., **Languages:** JavaScript).
-6. Create any other relevant sections like "Projects" if data is available.
-7. Ensure all content is professional, ATS-friendly, and perfectly grammatically correct.
-8. If the user provided a Job Description, tailor the summary and experience bullet points to highlight relevant skills.
+STRICT INSTRUCTIONS & STANDARDS:
 
-Return ONLY a valid JSON object matching this structure:
+1. PERSONAL INFO (basics):
+   - Extract name, title, email, phone, and location.
+   - Extract relevant links (LinkedIn, GitHub, Portfolio). Each link MUST have a 'label' (e.g., 'GitHub', 'Portfolio') and a valid 'url'.
+   
+2. PROFESSIONAL SUMMARY (text section, id: "summary"):
+   - Write EXACTLY 3 to 4 sentences for a compelling, ATS-optimized paragraph highlighting the candidate's unique value proposition, core expertise, and career trajectory.
+
+3. EXPERIENCE (timeline section, id: "experience"):
+   - Map roles to timeline items: 'primary' (Role/Title), 'secondary' (Company), 'date' (e.g., "Jan 2020 - Present"), 'location'.
+   - CRITICAL MARKDOWN RULE: The 'content' field MUST use standard Markdown unordered lists. You MUST use a hyphen and a space ('- ') for each bullet point.
+   - DO NOT use hardcoded unicode bullets (•, ◦, ▪).
+   - Start every bullet point with a strong action verb (e.g., "Architected", "Engineered", "Spearheaded").
+   - Quantify achievements with metrics, percentages, and data wherever possible.
+   - BOLD key metrics, important technologies, and core achievements within each bullet point using markdown (e.g., "**40% latency reduction**" or "**React.js**").
+   - Separate each bullet point with a newline character (\\n).
+   
+   Example of valid Markdown for 'content':
+   - Engineered a scalable microservices architecture using **Node.js**, reducing latency by **40%**.\\n- Mentored a team of 5 junior developers, improving code delivery speed by **25%**.
+
+4. EDUCATION (timeline section, id: "education"):
+   - 'primary' (Degree), 'secondary' (Institution), 'date', 'location'. Add GPA or honors in 'content' if notable.
+
+5. TECHNICAL SKILLS (text section, id: "skills"):
+   - Group skills logically. Format the category name in bold, followed by a colon, and comma-separated skills.
+   - Example: **Languages:** JavaScript, Python, C++\\n**Frameworks:** React, Node.js, Next.js
+
+6. PROJECTS (timeline section, id: "projects"):
+   - If applicable, format similarly to Experience. Include technologies used and measurable impact.
+
+7. ATS TAILORING:
+   - If a Job Description is provided, seamlessly weave the target keywords and required skills into the summary and experience bullets without keyword stuffing.
+
+Return ONLY a valid JSON object matching exactly this structure:
 {
   "basics": {
     "name": "...", "title": "...", "email": "...", "phone": "...", "location": "...", "alignment": "center", "links": [{ "label": "...", "url": "..." }]
