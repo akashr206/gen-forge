@@ -38,6 +38,14 @@ export async function POST(req) {
     const body = await req.json().catch(() => ({}));
     const title = body.title || "Untitled Resume";
 
+    const resumeCount = await Resume.countDocuments({ userId: session.user.id });
+    if (resumeCount >= 10) {
+      return NextResponse.json(
+        { error: "Maximum limit of 10 resumes reached" },
+        { status: 403 }
+      );
+    }
+
     const newResume = await Resume.create({
       userId: session.user.id,
       title,

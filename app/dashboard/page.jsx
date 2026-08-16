@@ -27,6 +27,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import ResumeThumbnail from "@/components/resume/ResumeThumbnail";
 
 export default function DashboardPage() {
   const { data: session } = useSession();
@@ -70,6 +71,10 @@ export default function DashboardPage() {
   }, []);
 
   const handleCreateResume = async () => {
+    if (resumes.length >= 10) {
+      alert("You have reached the maximum limit of 10 resumes. Please delete an existing resume to create a new one.");
+      return;
+    }
     router.push("/create");
   };
 
@@ -223,7 +228,7 @@ export default function DashboardPage() {
 
               <button
                 onClick={handleCreateResume}
-                disabled={creating}
+                disabled={creating || resumes.length >= 10}
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded bg-indigo-600 hover:bg-indigo-700 text-white font-mono text-xs uppercase tracking-wider font-semibold shadow-[0_4px_14px_0_rgba(79,70,229,0.35)] hover:shadow-[0_6px_20px_rgba(79,70,229,0.45)] transition-all duration-200 active:scale-95 group disabled:opacity-60"
               >
                 {creating ? (
@@ -231,7 +236,7 @@ export default function DashboardPage() {
                 ) : (
                   <Plus className="w-4 h-4 group-hover:rotate-90 transition-transform duration-300" />
                 )}
-                <span>{creating ? "Creating..." : "Create New Resume"}</span>
+                <span>{resumes.length >= 10 ? "Limit Reached (10/10)" : creating ? "Creating..." : "Create New Resume"}</span>
               </button>
             </div>
 
@@ -262,18 +267,9 @@ export default function DashboardPage() {
                     key={targetId}
                     className="bg-white rounded-xl border border-slate-200/80 p-5 flex flex-col hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group relative"
                   >
-                    <div className="aspect-[1/1.3] w-full bg-slate-100/70 mb-5 rounded-lg overflow-hidden border border-slate-200/60 relative p-4 flex flex-col justify-between group-hover:border-indigo-200 transition-colors">
-                      <div className="bg-white rounded-md shadow-xs p-4 h-full flex flex-col gap-2 font-serif select-none overflow-hidden opacity-90">
-                        <div className="h-3 w-2/3 bg-gray-800 rounded-sm mb-1" />
-                        <div className="h-2 w-1/3 bg-gray-400 rounded-sm mb-3" />
-                        <div className="h-1.5 w-full bg-gray-200 rounded-sm" />
-                        <div className="h-1.5 w-full bg-gray-200 rounded-sm" />
-                        <div className="h-1.5 w-4/5 bg-gray-200 rounded-sm mb-3" />
-                        <div className="h-2 w-1/3 bg-indigo-400 rounded-sm mb-1" />
-                        <div className="h-1.5 w-full bg-gray-200 rounded-sm" />
-                        <div className="h-1.5 w-full bg-gray-200 rounded-sm" />
-                      </div>
-
+                    <div className="aspect-[1/1.414] w-full bg-slate-100/70 mb-5 rounded-lg overflow-hidden border border-slate-200/60 relative group-hover:border-indigo-200 transition-colors">
+                      <ResumeThumbnail resume={resume} />
+                      
                       <div className="absolute inset-0 bg-slate-900/10 opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-[2px] flex items-center justify-center gap-3">
                         <Link
                           href={`/resume?id=${targetId}`}
@@ -340,17 +336,17 @@ export default function DashboardPage() {
 
               <button
                 onClick={handleCreateResume}
-                disabled={creating}
-                className="bg-white/50 rounded-xl border-2 border-dashed border-slate-300 p-8 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-white hover:border-indigo-400 transition-all duration-300 min-h-[340px] group shadow-2xs text-left"
+                disabled={creating || resumes.length >= 10}
+                className="bg-white/50 rounded-xl border-2 border-dashed border-slate-300 p-8 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-white hover:border-indigo-400 transition-all duration-300 min-h-[340px] group shadow-2xs text-left disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 <div className="w-14 h-14 rounded-lg bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 mb-4 group-hover:scale-110 transition-transform duration-200">
                   <Plus className="w-6 h-6" />
                 </div>
                 <h3 className="font-ui text-lg font-bold text-gray-900 mb-1">
-                  Start from Scratch
+                  {resumes.length >= 10 ? "Limit Reached" : "Start from Scratch"}
                 </h3>
                 <p className="font-ui text-xs text-gray-500 max-w-xs">
-                  Create a fresh ATS-friendly resume.
+                  {resumes.length >= 10 ? "Delete a resume to create a new one." : "Create a fresh ATS-friendly resume."}
                 </p>
               </button>
             </div>

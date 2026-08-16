@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useSession, signOut } from 'next-auth/react';
 
-const Navbar = () => {
+const Navbar = ({ title, onTitleChange }) => {
   const { data: session } = useSession();
   const pathname = usePathname();
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -28,14 +28,32 @@ const Navbar = () => {
 
   return (
     <nav className="h-16 shrink-0 w-full bg-white border-b border-gray-200 px-6 flex items-center justify-between z-20 print:hidden">
-      <Link href={session ? "/dashboard" : "/"} className="flex items-center gap-2 group">
-        <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-bold text-lg group-hover:scale-105 transition-transform duration-200 shadow-xs">
-          G
-        </div>
-        <span className="font-bold text-xl tracking-tight text-gray-900 font-ui">GenX</span>
-      </Link>
+      <div className="flex items-center gap-4 flex-1">
+        <Link href={session ? "/dashboard" : "/"} className="flex items-center gap-2 group shrink-0">
+          <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-bold text-lg group-hover:scale-105 transition-transform duration-200 shadow-xs">
+            G
+          </div>
+          <span className="font-bold text-xl tracking-tight text-gray-900 font-ui">GenX</span>
+        </Link>
 
-      <div className="flex items-center gap-3">
+        {pathname === '/resume' && title !== undefined && (
+          <>
+            <div className="h-5 w-px bg-gray-300 shrink-0"></div>
+            <div className="relative w-full max-w-sm group/title">
+              <input
+                type="text"
+                value={title}
+                onChange={(e) => onTitleChange?.(e.target.value)}
+                className="w-full font-ui text-base font-medium text-gray-600 bg-transparent border border-transparent hover:border-gray-200 hover:bg-gray-50 focus:bg-white focus:border-indigo-300 focus:ring-2 focus:ring-indigo-100 rounded-md px-3 py-1 transition-all outline-hidden truncate"
+                placeholder="Untitled Resume"
+                title="Rename Resume"
+              />
+            </div>
+          </>
+        )}
+      </div>
+
+      <div className="flex items-center gap-3 shrink-0">
         {pathname === '/resume' && (
           <button 
             onClick={handleExport}
