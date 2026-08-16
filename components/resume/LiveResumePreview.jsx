@@ -1,6 +1,7 @@
 "use client"
 import React from 'react';
 import BaseTemplate from './templates/BaseTemplate';
+import ResumeSkeleton from './ui/ResumeSkeleton';
 
 const FONT_CONFIG = {
   "Latin Modern Sans": { family: '"Latin Modern Sans", sans-serif', url: "https://cdn.jsdelivr.net/npm/latin-modern-webfont@1.1.0/css/latinmodern-sans.css" },
@@ -18,7 +19,8 @@ const FONT_CONFIG = {
   "Times New Roman": { family: '"Times New Roman", Times, serif' }
 };
 
-const LiveResumePreview = ({ data }) => {
+const LiveResumePreview = ({ data, showSkeleton = false }) => {
+  if (showSkeleton) return <ResumeSkeleton />;
   if (!data) return null;
 
   const headerFontConfig = FONT_CONFIG[data.design?.headerFont] || FONT_CONFIG["Helvetica"];

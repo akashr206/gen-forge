@@ -38,8 +38,8 @@ const MarkdownEditor = ({ value, onChange, placeholder }) => {
   };
 
   return (
-    <div className="border border-input rounded-md focus-within:ring-1 focus-within:ring-primary focus-within:border-primary overflow-hidden bg-white shadow-sm">
-      <div className="flex items-center gap-1 p-1 border-b bg-gray-50/50">
+    <div className="border border-input rounded focus-within:ring-1 focus-within:ring-primary focus-within:border-primary overflow-hidden bg-white shadow-sm">
+      <div className="flex items-center gap-1 p-1.5 border-b border-input bg-gray-50/50">
         <button 
           onClick={(e) => { e.preventDefault(); insertFormatting('**', '**'); }}
           className="p-1.5 text-gray-600 hover:bg-gray-200 hover:text-gray-900 rounded transition-colors"

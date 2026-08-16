@@ -58,7 +58,7 @@ const NumberControl = ({ label, value, onChange, min, max }) => {
         <button 
           onClick={handleMinus}
           disabled={value <= min}
-          className="w-7 h-7 flex items-center justify-center rounded-md border border-gray-200 bg-gray-50 text-gray-600 hover:bg-gray-100 disabled:opacity-50 transition-colors"
+          className="w-7 h-7 flex items-center justify-center rounded border border-gray-200 bg-gray-50 text-gray-600 hover:bg-gray-100 disabled:opacity-50 transition-colors"
         >
           -
         </button>
@@ -69,13 +69,13 @@ const NumberControl = ({ label, value, onChange, min, max }) => {
             value={localValue}
             onChange={handleChange}
             onBlur={handleBlur}
-            className="h-7 w-11 text-center px-2 rounded-md border border-gray-200 bg-white text-sm font-medium focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+            className="h-7 w-11 text-center px-2 rounded border border-gray-200 bg-white text-sm font-medium focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
           />
         </div>
         <button 
           onClick={handlePlus}
           disabled={value >= max}
-          className="w-7 h-7 flex items-center justify-center rounded-md border border-gray-200 bg-gray-50 text-gray-600 hover:bg-gray-100 disabled:opacity-50 transition-colors"
+          className="w-7 h-7 flex items-center justify-center rounded border border-gray-200 bg-gray-50 text-gray-600 hover:bg-gray-100 disabled:opacity-50 transition-colors"
         >
           +
         </button>

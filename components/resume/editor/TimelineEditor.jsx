@@ -24,7 +24,7 @@ const TimelineEditor = ({ items, onChange }) => {
     <div className="flex flex-col gap-3">
       <Accordion type="single" collapsible className="w-full">
         {items.map((item, index) => (
-          <AccordionItem key={index} value={`item-${index}`} className="border bg-gray-50 rounded-md px-3 mb-2">
+          <AccordionItem key={index} value={`item-${index}`} className="border bg-gray-50 rounded px-3 mb-2">
             <div className="flex items-center justify-between group">
               <AccordionTrigger className="hover:no-underline flex-1 text-sm font-medium">
                 {item.primary || 'Untitled'}

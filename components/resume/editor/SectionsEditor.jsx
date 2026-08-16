@@ -31,7 +31,7 @@ const SectionsEditor = ({ sections, onChange }) => {
     <div className="flex flex-col gap-4">
       <Accordion type="single" collapsible className="w-full">
         {sections.map((section, index) => (
-          <AccordionItem key={section.id || index} value={`section-${index}`} className="border bg-white rounded-md px-3 mb-3">
+          <AccordionItem key={section.id || index} value={`section-${index}`} className="border bg-white rounded px-3 mb-3">
             <div className="flex items-center justify-between group">
               <AccordionTrigger className="hover:no-underline flex-1 text-sm font-medium">
                 {section.heading || 'Untitled Section'} ({section.type})

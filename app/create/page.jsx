@@ -77,7 +77,30 @@ export default function CreateResumePage() {
   const [parsedObject, setParsedObject] = useState({});
   const scrollRef = React.useRef(null);
 
-  // Auto-scroll disabled per user request
+  useEffect(() => {
+    if (isGenerating && scrollRef.current) {
+      requestAnimationFrame(() => {
+        if (scrollRef.current) {
+          const content = scrollRef.current.querySelector('.font-resume-body');
+          if (content) {
+            const contentRect = content.getBoundingClientRect();
+            const scrollRect = scrollRef.current.getBoundingClientRect();
+            
+            const contentBottomRelative = contentRect.bottom - scrollRect.top + scrollRef.current.scrollTop;
+            
+            const targetScrollTop = contentBottomRelative - scrollRect.height + 100;
+            
+            if (targetScrollTop > 0) {
+              scrollRef.current.scrollTo({
+                top: targetScrollTop,
+                behavior: 'smooth'
+              });
+            }
+          }
+        }
+      });
+    }
+  }, [parsedObject, isGenerating]);
 
   useEffect(() => {
     if (isGenerating) {
@@ -263,10 +286,12 @@ ${projects}
             ref={scrollRef}
             className="relative flex-1 w-full flex justify-center overflow-y-auto overflow-x-hidden pt-4 pb-16"
           >
-            {/* The live preview */}
             <div className="transform scale-[0.65] md:scale-[0.80] xl:scale-90 origin-top transition-all duration-500 ease-in-out">
-              <div className="shadow-2xl shadow-blue-500/10 ring-1 ring-black/5 bg-white pointer-events-none rounded-md overflow-hidden">
-                <LiveResumePreview data={livePreviewData} />
+              <div className="shadow-2xl shadow-blue-500/10 ring-1 ring-black/5 bg-white pointer-events-none rounded-xl overflow-hidden">
+                <LiveResumePreview 
+                  data={livePreviewData} 
+                  showSkeleton={Object.keys(parsedObject).length === 0} 
+                />
               </div>
             </div>
           </div>
@@ -379,13 +404,13 @@ ${projects}
           </Card>
 
           {error && (
-            <div className="p-4 bg-red-50 text-red-600 rounded-lg text-sm">
+            <div className="p-4 bg-red-50 text-red-600 rounded text-sm">
               An error occurred during generation: {error.message}
             </div>
           )}
 
           <div className="flex justify-end pt-4 pb-20">
-            <Button size="lg" className="px-8 h-12 rounded-full text-base font-medium shadow-lg hover:shadow-xl transition-all" onClick={handleBuild}>
+            <Button size="lg" className="px-8 h-12 rounded text-base font-medium shadow-lg hover:shadow-xl transition-all" onClick={handleBuild}>
               <Sparkles className="w-5 h-5 mr-2" />
               Build Magic Resume
             </Button>

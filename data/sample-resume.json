@@ -1,14 +1,14 @@
 {
   "design": {
-    "headerFont": "TeX Gyre Pagella",
+    "headerFont": "EB Garamond",
     "bodyFont": "Noto Sans",
     "margin": 56,
     "sectionGap": 10,
-    "itemGap": 6,
+    "itemGap": 4,
     "fontSizes": {
       "title": 44,
       "subtitle": 24,
-      "sectionHeader": 24,
+      "sectionHeader": 22,
       "itemTitle": 20,
       "itemSubtitle": 16,
       "body": 14

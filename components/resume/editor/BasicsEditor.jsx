@@ -102,7 +102,7 @@ const BasicsEditor = ({ basics, onChange }) => {
 
     <div className="grid gap-2">
         <Label>Alignment</Label>
-        <div className="flex gap-2 p-1 bg-gray-100 rounded-md w-fit">
+        <div className="flex gap-2 p-1 bg-gray-100 rounded w-fit">
           <button
             onClick={() => handleChange('alignment', 'left')}
             className={`p-2 rounded ${basics.alignment === 'left' ? 'bg-white shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}

@@ -180,11 +180,11 @@ export default function DashboardPage() {
           </div>
         ) : resumes.length === 0 ? (
           <div className="flex-1 flex items-center justify-center py-12">
-            <div className="w-full max-w-lg bg-white/80 backdrop-blur-xl border border-white/80 rounded-3xl p-8 sm:p-12 shadow-2xl text-center flex flex-col items-center relative overflow-hidden group">
+            <div className="w-full max-w-lg bg-white/80 backdrop-blur-xl border border-white/80 rounded-xl p-8 sm:p-12 shadow-2xl text-center flex flex-col items-center relative overflow-hidden group">
               <div className="absolute -top-24 -right-24 w-48 h-48 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
               <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
 
-              <div className="w-20 h-20 rounded-3xl bg-indigo-50 border border-indigo-100/80 flex items-center justify-center text-indigo-600 mb-6 shadow-sm group-hover:scale-105 transition-transform duration-300">
+              <div className="w-20 h-20 rounded-xl bg-indigo-50 border border-indigo-100/80 flex items-center justify-center text-indigo-600 mb-6 shadow-sm group-hover:scale-105 transition-transform duration-300">
                 <FilePlus className="w-10 h-10" />
               </div>
 
@@ -198,7 +198,7 @@ export default function DashboardPage() {
               <button
                 onClick={handleCreateResume}
                 disabled={creating}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-mono text-xs uppercase tracking-wider font-semibold shadow-[0_4px_20px_rgba(79,70,229,0.35)] hover:shadow-[0_6px_25px_rgba(79,70,229,0.45)] hover:scale-[1.02] transition-all duration-200 active:scale-95 disabled:opacity-60"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded bg-indigo-600 hover:bg-indigo-700 text-white font-mono text-xs uppercase tracking-wider font-semibold shadow-[0_4px_20px_rgba(79,70,229,0.35)] hover:shadow-[0_6px_25px_rgba(79,70,229,0.45)] hover:scale-[1.02] transition-all duration-200 active:scale-95 disabled:opacity-60"
               >
                 {creating ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
@@ -224,7 +224,7 @@ export default function DashboardPage() {
               <button
                 onClick={handleCreateResume}
                 disabled={creating}
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-mono text-xs uppercase tracking-wider font-semibold shadow-[0_4px_14px_0_rgba(79,70,229,0.35)] hover:shadow-[0_6px_20px_rgba(79,70,229,0.45)] transition-all duration-200 active:scale-95 group disabled:opacity-60"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded bg-indigo-600 hover:bg-indigo-700 text-white font-mono text-xs uppercase tracking-wider font-semibold shadow-[0_4px_14px_0_rgba(79,70,229,0.35)] hover:shadow-[0_6px_20px_rgba(79,70,229,0.45)] transition-all duration-200 active:scale-95 group disabled:opacity-60"
               >
                 {creating ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
@@ -247,7 +247,7 @@ export default function DashboardPage() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Filter resumes..."
-                  className="w-full pl-10 pr-4 py-2 bg-white border border-gray-200 rounded-full font-ui text-sm text-gray-800 placeholder:text-gray-400 focus:outline-hidden focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all shadow-2xs"
+                  className="w-full pl-10 pr-4 py-2 bg-white border border-gray-200 rounded font-ui text-sm text-gray-800 placeholder:text-gray-400 focus:outline-hidden focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all shadow-2xs"
                 />
               </div>
             </div>
@@ -260,31 +260,31 @@ export default function DashboardPage() {
                 return (
                   <div
                     key={targetId}
-                    className="bg-white rounded-2xl border border-slate-200/80 p-5 flex flex-col hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group relative"
+                    className="bg-white rounded-xl border border-slate-200/80 p-5 flex flex-col hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group relative"
                   >
-                    <div className="aspect-[1/1.3] w-full bg-slate-100/70 mb-5 rounded-xl overflow-hidden border border-slate-200/60 relative p-4 flex flex-col justify-between group-hover:border-indigo-200 transition-colors">
+                    <div className="aspect-[1/1.3] w-full bg-slate-100/70 mb-5 rounded-lg overflow-hidden border border-slate-200/60 relative p-4 flex flex-col justify-between group-hover:border-indigo-200 transition-colors">
                       <div className="bg-white rounded-md shadow-xs p-4 h-full flex flex-col gap-2 font-serif select-none overflow-hidden opacity-90">
-                        <div className="h-3 w-2/3 bg-gray-800 rounded-xs mb-1" />
-                        <div className="h-2 w-1/3 bg-gray-400 rounded-xs mb-3" />
-                        <div className="h-1.5 w-full bg-gray-200 rounded-xs" />
-                        <div className="h-1.5 w-full bg-gray-200 rounded-xs" />
-                        <div className="h-1.5 w-4/5 bg-gray-200 rounded-xs mb-3" />
-                        <div className="h-2 w-1/3 bg-indigo-400 rounded-xs mb-1" />
-                        <div className="h-1.5 w-full bg-gray-200 rounded-xs" />
-                        <div className="h-1.5 w-full bg-gray-200 rounded-xs" />
+                        <div className="h-3 w-2/3 bg-gray-800 rounded-sm mb-1" />
+                        <div className="h-2 w-1/3 bg-gray-400 rounded-sm mb-3" />
+                        <div className="h-1.5 w-full bg-gray-200 rounded-sm" />
+                        <div className="h-1.5 w-full bg-gray-200 rounded-sm" />
+                        <div className="h-1.5 w-4/5 bg-gray-200 rounded-sm mb-3" />
+                        <div className="h-2 w-1/3 bg-indigo-400 rounded-sm mb-1" />
+                        <div className="h-1.5 w-full bg-gray-200 rounded-sm" />
+                        <div className="h-1.5 w-full bg-gray-200 rounded-sm" />
                       </div>
 
                       <div className="absolute inset-0 bg-slate-900/10 opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-[2px] flex items-center justify-center gap-3">
                         <Link
                           href={`/resume?id=${targetId}`}
-                          className="p-3 bg-white text-indigo-600 rounded-full shadow-lg hover:bg-indigo-600 hover:text-white transition-colors duration-200 transform hover:scale-110"
+                          className="p-3 bg-white text-indigo-600 rounded shadow-lg hover:bg-indigo-600 hover:text-white transition-colors duration-200 transform hover:scale-110"
                           title="Edit Resume"
                         >
                           <Edit3 className="w-4 h-4" />
                         </Link>
                         <Link
                           href={`/resume?id=${targetId}`}
-                          className="p-3 bg-white text-gray-700 rounded-full shadow-lg hover:bg-gray-900 hover:text-white transition-colors duration-200 transform hover:scale-110"
+                          className="p-3 bg-white text-gray-700 rounded shadow-lg hover:bg-gray-900 hover:text-white transition-colors duration-200 transform hover:scale-110"
                           title="Preview & Export"
                         >
                           <Download className="w-4 h-4" />
@@ -292,7 +292,7 @@ export default function DashboardPage() {
                         <button
                           onClick={(e) => openDeleteDialog(targetId, resume.title, e)}
                           disabled={isDeleting}
-                          className="p-3 bg-white text-red-500 rounded-full shadow-lg hover:bg-red-600 hover:text-white transition-colors duration-200 transform hover:scale-110 disabled:opacity-50"
+                          className="p-3 bg-white text-red-500 rounded shadow-lg hover:bg-red-600 hover:text-white transition-colors duration-200 transform hover:scale-110 disabled:opacity-50"
                           title="Delete Resume"
                         >
                           {isDeleting ? (
@@ -341,9 +341,9 @@ export default function DashboardPage() {
               <button
                 onClick={handleCreateResume}
                 disabled={creating}
-                className="bg-white/50 rounded-2xl border-2 border-dashed border-slate-300 p-8 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-white hover:border-indigo-400 transition-all duration-300 min-h-[340px] group shadow-2xs text-left"
+                className="bg-white/50 rounded-xl border-2 border-dashed border-slate-300 p-8 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-white hover:border-indigo-400 transition-all duration-300 min-h-[340px] group shadow-2xs text-left"
               >
-                <div className="w-14 h-14 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 mb-4 group-hover:scale-110 transition-transform duration-200">
+                <div className="w-14 h-14 rounded-lg bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 mb-4 group-hover:scale-110 transition-transform duration-200">
                   <Plus className="w-6 h-6" />
                 </div>
                 <h3 className="font-ui text-lg font-bold text-gray-900 mb-1">

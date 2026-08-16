@@ -48,15 +48,15 @@ const ResumeSchema = new mongoose.Schema(
       default: "My Resume",
     },
     design: {
-      headerFont: { type: String, default: "TeX Gyre Pagella" },
+      headerFont: { type: String, default: "EB Garamond" },
       bodyFont: { type: String, default: "Noto Sans" },
       margin: { type: Number, default: 56 },
       sectionGap: { type: Number, default: 20 },
-      itemGap: { type: Number, default: 6 },
+      itemGap: { type: Number, default: 4 },
       fontSizes: {
         title: { type: Number, default: 44 },
         subtitle: { type: Number, default: 24 },
-        sectionHeader: { type: Number, default: 24 },
+        sectionHeader: { type: Number, default: 22 },
         itemTitle: { type: Number, default: 20 },
         itemSubtitle: { type: Number, default: 16 },
         body: { type: Number, default: 14 },
